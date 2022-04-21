@@ -16,7 +16,7 @@ resource "spotify_playlist" "custom" {
   tracks = flatten([
       random_shuffle.artist.result
   ])
-  }
+}
 # Find ids for songs
 data "spotify_search_track" "custom_count" {
   count = length(var.artist_list)

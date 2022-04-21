@@ -1,0 +1,23 @@
+# Example .tfvars file
+PM_PASS = "proxmox terraform user password"
+PM_USER = "proxmox terraform user username"
+PM_URL = "https://IPADDRESSorFQDN:8006/api2/json"
+PM_node = "target proxmox server name"
+PM_template = "target tempalte in Proxmox"
+linux_fqdn = "desired name.domain"
+linux_ip = "desired IP"
+linux_subnetmask = "subnet mask of network" # Should be 24, 26, 30, etc.
+linux_gateway = "gateway ip"
+
+ssh_user = "linux username" 
+
+ssh_keys = <<EOF
+ssh-rsa key here
+ssh-rsa key here
+EOF
+
+ssh_priv = <<EOF
+-----BEGIN OPENSSH PRIVATE KEY-----
+private keye here
+-----END OPENSSH PRIVATE KEY----- 
+EOF
