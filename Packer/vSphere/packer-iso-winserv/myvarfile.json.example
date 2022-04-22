@@ -1,0 +1,10 @@
+{   
+    "vcenter_server": "fqdn-vcenter-server",
+    "vcenter_user": "vcenter-adminuser",
+    "vcenter_password": "vcenter-password",
+    "vcenter_datacenter": "datacenter-host",
+    "vcenter_datastore": "datastore-name",
+    "esx_host": "fqdn-esxi-host",
+    "esx_user": "esxi-adminuser",
+    "esx_password": "esxi-password"
+}
