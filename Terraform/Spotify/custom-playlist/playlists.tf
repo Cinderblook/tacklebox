@@ -1,7 +1,7 @@
 # Creates playlist based on spotify search
 resource "spotify_playlist" "custom" {
-  name        = "Terraform Playlist"
-  description = "This playlist was created by Terraform"
+  name        = var.playlist_name
+  description = var.playlist_desc
   public = true
 
   tracks = flatten([

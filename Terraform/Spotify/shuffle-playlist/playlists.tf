@@ -10,8 +10,8 @@ resource "spotify_playlist" "custom" {
     ]
     
   
-  name        = "Autogen-Terraform"
-  description = "This playlist was created by Terraform"
+  name        = var.playlist_name
+  description = var.playlist_desc
   public = true
   tracks = flatten([
       random_shuffle.artist.result

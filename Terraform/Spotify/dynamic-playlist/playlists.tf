@@ -6,8 +6,8 @@ resource "spotify_playlist" "custom" {
     ]
     
   
-  name        = "Autogen-Dynamic"
-  description = "This playlist was created by Terraform"
+  name        = var.playlist_name
+  description = var.playlist_desc
   public = true
   tracks = flatten([
       local.artist_track_ids,

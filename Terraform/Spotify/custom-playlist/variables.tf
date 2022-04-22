@@ -14,3 +14,11 @@ variable "spotify_oauth_url" {
   type        = string
   description = "url path of oauth server"
 }
+variable "playlist_name" {
+  type        = string
+  description = "name of playlist"
+}
+variable "playlist_desc" {
+  type        = string
+  description = "desc of playlist"
+}

@@ -2,4 +2,6 @@ spotify_api_key = "Spotify API key here"
 spotify_user = "oauth User"
 spotify_token_id = "oauth Token Here"
 spotify_oauth_url = "oauth site  here"
+playlist_name = "name"
+playlist_desc ="description"
 artist_list = ["Artist", "Go", "Here"]
