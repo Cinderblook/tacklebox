@@ -17,16 +17,11 @@ Distinct layout of what is throughout this repository. Some notable projects are
 *vSphere:*
 * [vSphere-WinServ-Deployment](https://github.com/Cinderblook/tacklebox/tree/main/Terraform/vSphere/vSphere-WinServ-Deployment); Within a local vSphere center, create multiple windows servers enrolled in a domain. This has functioning/active DHCP, DNS, and Active Directory. The environment has security groups, users, and memberships applied. 
 
-
-
 *Proxmox:*
 * [deploy-vm](https://github.com/Cinderblook/tacklebox/tree/main/Terraform/Proxmox/deploy-vm): Creating Virtual Machines in Proxmox from a template
-## [**Network-Automation**](https://github.com/Cinderblook/tacklebox/tree/main/Network-Automation) <img src="https://www.python.org/static/favicon.ico" alt="Packer" width="40"> <img src="https://www.ansible.com/hs-fs/hub/330046/file-448313641.png" alt="Packer" width="40"> <br>
+## [**Network-Automation**](https://github.com/Cinderblook/tacklebox/tree/main/Network-Automation) <img src="https://www.python.org/static/favicon.ico" alt="Packer" width="40"> <img src="https://www.ansible.com/hs-fs/hub/330046/file-448313641.png" alt="Packer" width="40"> <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/PowerShell_Core_6.0_icon.png/64px-PowerShell_Core_6.0_icon.png" alt="Packer" width="40"> <br>
 * Good stuff here
 
 ## [**Kubernetes**](https://github.com/Cinderblook/tacklebox/tree/main/Kubernetes) <img src="https://kubernetes.io/images/favicon.png" alt="Packer" width="40"> <img src="https://k3s.io/images/logo-k3s.svg" alt="Packer" width="60"><br>
 * [k3s-HACluster-Rancher](https://github.com/Cinderblook/tacklebox/tree/main/Kubernetes/k3s-HACluster-Rancher); Create a highly available K3S Cluster managed with Rancher.
 
-
-
-<img src="https://www.ansible.com/hs-fs/hub/330046/file-448313641.png" alt="Packer" width="40">
