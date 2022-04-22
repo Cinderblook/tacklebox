@@ -1,0 +1,38 @@
+---
+- name: change DNS server
+  win_dns_client:
+    adapter_names: '*'
+    ipv4_addresses: 
+      - "{{ groups['pdc'][0] }}"
+      - "{{ groups['rdc'][0] }}"
+
+- name: join domain
+  win_domain_membership:
+    dns_domain_name: "{{ domain }}"
+    hostname: "{{ primary_dhcp_server }}"
+    domain_admin_user: "{{ domain_admin }}"
+    domain_admin_password: "{{ domain_admin_password }}"
+    state: domain
+  register: domain_joined
+
+- name: reboot after domain join
+  win_reboot:
+  when: domain_joined.reboot_required
+
+- name: Install DHCP Service
+  ansible.windows.win_feature:
+    name: DHCP
+    state: present
+    include_management_tools: yes
+  
+# Use Windows Powershell to configure DHCP Service
+- name: Configure DHCP Scope
+  win_shell: Add-DhcpServerV4Scope -Name "DHCPScope" -StartRange "{{ dhcp_scope_start }}" -EndRange "{{ dhcp_scope_end }}" -SubnetMask "{{ dhcp_scope_submask }}"
+- name: Configure DHCP DNS
+  win_shell: Set-DhcpServerV4OptionValue -DnsServer "{{ groups['pdc'][0] }}" -Router "{{ dhcp_scope_router }}"
+- name: Configure DHCP Lease Duration
+  win_shell: Set-DhcpServerv4Scope -ScopeId "{{ dhcp_scope_start }}" -LeaseDuration 1.00:00:00
+- name: Restart DHCP service
+  win_shell: Restart-service dhcpserver
+- name: Add DHCP as Authorized Server
+  win_shell: Add-DhcpServerInDC 

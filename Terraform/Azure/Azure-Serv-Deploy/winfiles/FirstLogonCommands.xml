@@ -1,0 +1,27 @@
+<FirstLogonCommands>
+    <SynchronousCommand>
+        <CommandLine>winrm quickconfig -force</CommandLine>
+        <Description>Enable Quickconfig for winrm</Description>
+        <Order>11</Order>
+    </SynchronousCommand>
+    <SynchronousCommand>
+        <CommandLine>winrm set winrm/config @{MaxEnvelopeSizekb=\"100000\"}</CommandLine>
+        <Description>Setup winrm max envelope size to be compatible with Ansible</Description>
+        <Order>12</Order>
+    </SynchronousCommand>
+    <SynchronousCommand>
+        <CommandLine>winrm set winrm/config/Service @{AllowUnencrypted=\"true\"}</CommandLine>
+        <Description>Allow Ansible config to traverse the internal subnet unencrypted</Description>
+        <Order>13</Order>
+    </SynchronousCommand>
+    <SynchronousCommand>
+        <CommandLine>winrm set winrm/config/Service/Auth @{Basic=\"true\"}</CommandLine>
+        <Description>Allow Ansible config to traverse the internal subnet basic</Description>
+        <Order>14</Order>
+    </SynchronousCommand>
+    <SynchronousCommand>
+        <CommandLine>netsh advfirewall set allprofiles state off</CommandLine>
+        <Description>Allow Ansible config to traverse the internal subnet unencrypted</Description>
+        <Order>15</Order>
+    </SynchronousCommand>
+</FirstLogonCommands>

@@ -1,0 +1,22 @@
+---
+- hosts: pdc
+  roles:
+    - pdc
+    - pdc_userdata
+    - common
+
+- hosts: rdc
+  roles:
+    - rdc
+    - common
+
+- hosts: fileserver
+  roles:
+    - fileserver
+    - common
+
+- hosts: dhcpserver
+  roles:
+    - dhcpserver
+    - common
+    

@@ -1,0 +1,13 @@
+---
+pdc:
+  hosts:
+    10.175.128.180:
+rdc:
+  hosts:
+    10.175.128.181:
+fileserver:
+  hosts:
+    10.175.128.182:
+dhcpserver:
+  hosts:
+    10.175.128.183

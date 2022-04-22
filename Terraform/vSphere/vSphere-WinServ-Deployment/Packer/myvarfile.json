@@ -1,0 +1,10 @@
+{   
+    "vcenter_server": "ajb52-vsphere01.ajb1.local",
+    "vcenter_user": "administrator@ajb1.local",
+    "vcenter_password": "Password1234",
+    "vcenter_datacenter": "AJB52-Datacenter",
+    "vcenter_datastore": "ESXI02-Data",
+    "esx_host": "ajb52-esxi01.ajb1.local",
+    "esx_user": "root",
+    "esx_password": "Password1234!"
+}

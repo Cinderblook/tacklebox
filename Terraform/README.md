@@ -1,13 +1,13 @@
 # Overview
 Using Terraform to configure environments within a plethora of platforms. 
 # Categories
-[AWS]() <br>
-[Azure]() <br>
-[Docker]() <br>
-[GCP]() <br>
-[Proxmox]() <br>
-[Spotify]() <br>
-[vSphere]() <br>
+[AWS](https://github.com/Cinderblook/tacklebox/tree/main/Terraform/AWS) <br>
+[Azure](https://github.com/Cinderblook/tacklebox/tree/main/Terraform/Azure) <br>
+[Docker](https://github.com/Cinderblook/tacklebox/tree/main/Terraform/Docker) <br>
+[Google](https://github.com/Cinderblook/tacklebox/tree/main/Terraform/GCP) <br>
+[Proxmox](https://github.com/Cinderblook/tacklebox/tree/main/Terraform/Proxmox) <br>
+[Spotify](https://github.com/Cinderblook/tacklebox/tree/main/Terraform/Spotify) <br>
+[vSphere](https://github.com/Cinderblook/tacklebox/tree/main/Terraform/vSphere) <br>
 
 # Larger Notable Terraform Projects in this Repository:
 **Azure:**

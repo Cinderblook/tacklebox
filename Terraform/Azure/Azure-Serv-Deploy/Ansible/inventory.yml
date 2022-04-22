@@ -1,0 +1,13 @@
+---
+pdc:
+  hosts:
+    10.0.1.10:
+rdc:
+  hosts:
+    10.0.1.11:
+fileserver:
+  hosts:
+    10.0.1.13:
+dhcpserver:
+  hosts:
+    10.0.1.12

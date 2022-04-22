@@ -1,0 +1,11 @@
+#cloud-config
+apt_update: true
+packages:
+  - python-pip
+runcmd:
+  - sudo pip install ansible
+  - sudo ansible-galaxy install azure.azure_preview_modules
+  - sudo pip install -r ~/.ansible/roles/azure.azure_preview_modules/files/requirements-azure.txt
+  - pip install "pywinrm>=0.2.2"
+  - cd /tmp/Ansible
+  - sudo ansible-playbook winlab.yml
