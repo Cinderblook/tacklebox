@@ -8,6 +8,14 @@ A large consolidation of projects & configurations. Hopefully the correct bait c
 [Kubernetes](https://github.com/Cinderblook/tacklebox/tree/main/Kubernetes) <br>
 
 # Larger Notable Projects in this Repository:
+
+## *Kubernetes*
+* [k3s-HACluster-Rancher](https://github.com/Cinderblook/tacklebox/tree/main/Kubernetes/k3s-HACluster-Rancher); Create a highly available K3S Cluster managed with Rancher.
+ 
+## *Packer*
+* [proxmox-iso-ubuntu](https://github.com/Cinderblook/tacklebox/tree/main/Packer/Proxmox/packer-iso-ubuntu); Using Packer to create a configured Ubuntu tempalte
+
+## *Terraform*
 **Azure:**
 * [Azure-Serv-Deploy](https://github.com/Cinderblook/tacklebox/tree/main/Terraform/Azure/Azure-Serv-Deploy); Creating multiple windows servers in Azure enrolled in a domain. This has functioning/active DHCP, DNS, and Active Directory. The environment has security groups, users, and memberships applied. 
 * [Azure-K8S-Deploy](https://github.com/Cinderblook/tacklebox/tree/main/Terraform/Azure/Azure-K8S-Deploy); Creating a Kubernetes cluster with AKS in Azure.
@@ -21,7 +29,5 @@ A large consolidation of projects & configurations. Hopefully the correct bait c
 **vSphere:**
 * [vSphere-WinServ-Deployment](https://github.com/Cinderblook/tacklebox/tree/main/Terraform/vSphere/vSphere-WinServ-Deployment); Within a local vSphere center, create multiple windows servers enrolled in a domain. This has functioning/active DHCP, DNS, and Active Directory. The environment has security groups, users, and memberships applied. 
 
-**Kubernetes**
-* [k3s-HACluster-Rancher](https://github.com/Cinderblook/tacklebox/tree/main/Kubernetes/k3s-HACluster-Rancher); Create a highly available K3S Cluster managed with Rancher.
- 
+
 
