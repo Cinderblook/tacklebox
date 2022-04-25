@@ -5,10 +5,10 @@
 
 ## Example Usage
 To ping devices
-`ansible -i ./hosts/hosts.yaml ubuntu -m ping -u ubuntu --ask-pass`
+`ansible -i ./hosts/hosts.yaml ubuntu -m ping -u SSHUSERNAME --ask-pass`
 
 To pass playbooks
-`ansible-playbook ./playbooks/apt.yaml --user ubuntu --ask-pass --ask-become-pass -i ./hosts/hosts.yaml`
+`ansible-playbook ./playbooks/apt.yaml --user SSHUSERNAME --ask-pass --ask-become-pass -i ./hosts/hosts.yaml`
 
 Useful specific commands
 -i "Followed by inventory file"

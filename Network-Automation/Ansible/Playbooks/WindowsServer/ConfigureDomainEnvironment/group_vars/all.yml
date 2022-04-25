@@ -1,0 +1,30 @@
+---
+ansible_user: administrator
+ansible_password: "Password1234"
+ansible_port: 5985
+ansible_connection: winrm
+ansible_winrm_server_cert_validation: ignore
+
+domain: "ajb2.local"
+netbios_domain: "ajb2"
+top_level_domain: "local" 
+domain_admin: "{{ ansible_user }}@{{ domain }}"
+domain_admin_username: "{{ ansible_user }}"
+domain_admin_password: "Password1234"
+domain_safemode_password: "Password1234"
+
+primary_domain_controller: "ab-pdc"
+replica_domain_controller: "ab-rdc"
+primary_dhcp_server: "ab-dhcp"
+primary_fileshare_server: "ab-file"
+
+fqdn_primary_domain_controller: "{{ primary_domain_controller }}.{{ domain }}"
+fqdn_replica_domain_controller: "{{ replica_domain_controller }}.{{ domain }}"
+fqdn_primary_dhcp_server: "{{ primary_dhcp_server }}.{{ domain }}"
+fqdn_primary_fileshare_server: "{{ primary_fileshare_server }}.{{ domain }}"
+
+dhcp_scope_name: "DHCPScope"
+dhcp_scope_start: "10.175.128.185"
+dhcp_scope_end: "10.175.128.190"
+dhcp_scope_submask: "255.255.255.192"
+dhcp_scope_router: "10.175.128.185"

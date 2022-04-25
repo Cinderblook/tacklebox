@@ -1,0 +1,93 @@
+---
+# Create Groups for Domain
+- name: Create user group
+  ansible.windows.win_group:
+    name: Employees
+    description: Employee Group
+    state: present
+- name: Create Guest group
+  ansible.windows.win_group:
+    name: Guests
+    description: Guest group
+    state: present
+# Create OU for User locations (Staff, Guests, Admin)
+- name: Install nuget packge for OU creation
+  win_shell: install-packageprovider -name nuget -force
+- name: Install XactiveDirectory package for OU creation
+  win_psmodule:
+    name: ActiveDirectoryDSC
+    state: present
+- name: Create OU for Staff
+  win_dsc:
+    resource_name: ADOrganizationalUnit
+    name: "Staff"
+    path: "dc={{ netbios_domain }}, dc={{ top_level_domain }}"
+- name: Create OU for  Admin
+  win_dsc:
+    resource_name: ADOrganizationalUnit
+    name: "Admins"
+    path: "dc={{ netbios_domain }}, dc={{ top_level_domain }}"
+- name: Create OU for Guests
+  win_dsc:
+    resource_name: ADOrganizationalUnit
+    name: "Guests"
+    path: "dc={{ netbios_domain }}, dc={{ top_level_domain }}"
+# Create multiple users for Domain and add to respective groups
+- name: Create Guest User
+  community.windows.win_domain_user:
+    name: GuestUser
+    firstname: Guest
+    surname: User
+    password: Password1234
+    state: present
+    path: "ou=Guests, dc={{ netbios_domain }}, dc={{ top_level_domain }}"
+    groups: 
+    - Guests
+    - Domain Guests
+    domain_username: "{{ domain_admin_username }}"
+    domain_password: "{{ domain_admin_password }}"
+    domain_server: "{{ primary_domain_controller }}"
+- name: Create administrator Account
+  community.windows.win_domain_user:
+    name: AbarnesAdmin
+    firstname: Austin
+    surname: Barnes
+    password: Password1234
+    state: present
+    path: "ou=Admins, dc={{ netbios_domain }}, dc={{ top_level_domain }}"
+    groups: 
+    - Employees
+    - Domain Users
+    - Domain Admins
+    - Enterprise Admins
+    domain_username: "{{ domain_admin_username }}"
+    domain_password: "{{ domain_admin_password }}"
+    domain_server: "{{ primary_domain_controller }}"
+- name: Create Employee account John
+  community.windows.win_domain_user:
+    name: John
+    firstname: John
+    surname: Doe
+    password: Password1234
+    state: present
+    path: "ou=Staff, dc={{ netbios_domain }}, dc={{ top_level_domain }}"
+    groups: 
+    - Employees
+    - Domain Users
+    domain_username: "{{ domain_admin_username }}"
+    domain_password: "{{ domain_admin_password }}"
+    domain_server: "{{ primary_domain_controller }}"
+- name: Create Employee account Sadie
+  community.windows.win_domain_user:
+    name: Sadie
+    firstname: Sadie
+    surname: Smith
+    password: Password1234
+    state: present
+    path: "ou=Staff, dc={{ netbios_domain }}, dc={{ top_level_domain }}"
+    groups: 
+    - Employees
+    - Domain Users
+    domain_username: "{{ domain_admin_username }}"
+    domain_password: "{{ domain_admin_password }}"
+    domain_server: "{{ primary_domain_controller }}"
