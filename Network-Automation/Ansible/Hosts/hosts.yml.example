@@ -1,0 +1,11 @@
+[AnsibleSwitch:vars] 
+ansible_user=username
+ansible_password=password
+ansible_connection=cli 
+ansible_network_os=ios
+
+[AnsibleRouters:vars] 
+ansible_user=username
+ansible_password=password
+ansible_connection=cli 
+ansible_network_os=ios

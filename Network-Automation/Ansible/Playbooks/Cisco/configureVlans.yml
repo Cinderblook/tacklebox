@@ -1,0 +1,103 @@
+- hosts: AnsibleSwitches
+  connection: local
+  vars:
+    vlan_id: 1
+    vlan_name: Ansible_VLAN
+
+  tasks:
+    - name: Configure VLAN ID
+      ios_config:
+        lines:
+          - vlan {{ vlan_id }}
+
+    - name: Configure VLAN Name
+      ios_config:
+        lines:
+          - name {{ vlan_name }}
+        parents: vlan {{ vlan_id }}
+- hosts: AnsibleSwitch1
+  connection: local
+  vars:
+    vlan_id: 1
+    vlan_name: Ansible_VLAN
+
+  tasks:
+    - name: interface IP address
+      ios_config:
+        lines:
+        - ip address 192.168.1.1 255.255.255.0
+        - no shutdown
+        parents: interface vlan 1
+
+- hosts: AnsibleSwitch2
+  connection: local
+  vars:
+    vlan_id: 1
+    vlan_name: Ansible_VLAN
+
+  tasks:
+    - name: interface IP address
+      ios_config:
+        lines:
+        - ip address 192.168.1.2 255.255.255.0
+        - no shutdown
+        parents: interface vlan 1
+      
+- hosts: AnsibleSwitch3
+  connection: local
+  vars:
+    vlan_id: 1
+    vlan_name: Ansible_VLAN
+
+  tasks:
+    - name: interface IP address
+      ios_config:
+        lines:
+        - ip address 192.168.1.3 255.255.255.0
+        - no shutdown
+        parents: interface vlan 1
+
+- hosts: AnsibleSwitch4
+  connection: local
+  vars:
+    vlan_id: 1
+    vlan_name: Ansible_VLAN
+
+  tasks:
+    - name: interface IP address
+      ios_config:
+        lines:
+        - ip address 192.168.1.4 255.255.255.0
+        - no shutdown
+        parents: interface vlan 1
+        
+- hosts: AnsibleSwitches
+  connection: local
+  vars:
+    vlan_id: 1
+    vlan_name: Ansible_VLAN
+
+  tasks:
+    - name: Set IP Route
+      ios_config:
+        lines: 
+        - ip route 192.168.1.0 255.255.255.0 10.175.133.65
+
+    - name: Show VLAN
+      ios_command:
+        commands: show vlan brief
+      register: show_vlan
+    
+    - name: Show IP Int Brief
+      ios_command:
+        commands: show ip int brief
+      register: show_ip_brief
+
+    - name: Show ip route 
+      ios_command:
+        commands: show ip route
+      register: show_ip_route
+
+    - debug: var=show_vlan.stdout_lines
+    - debug: var=show_ip_brief.stdout_lines
+    - debug: var=show_ip_route.stdout_lines

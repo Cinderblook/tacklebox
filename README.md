@@ -1,5 +1,4 @@
-# Overview
-A large consolidation of projects & configurations. Hopefully the correct bait can be found here to catch just the right config.
+![tacklebox](https://socialify.git.ci/Cinderblook/tacklebox/image?description=1&font=KoHo&owner=1&pattern=Circuit%20Board&theme=Dark) 
 
 # Categories
 Distinct layout of what is throughout this repository. Some notable projects are shown for each category.
