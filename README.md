@@ -2,15 +2,20 @@
 
 # Categories
 Distinct layout of what is throughout this repository. Some notable projects are shown for each category.
-## [**Packer**](https://github.com/Cinderblook/tacklebox/tree/main/Packer) <img src="https://www.packer.io/packer/favicon.ico" alt="Packer" width="40"><br>
+## [**Packer**](https://github.com/Cinderblook/tacklebox/tree/main/Packer) <img src="https://www.packer.io/packer/favicon.ico" alt="Packer" width="40"> <br>
+
 * [proxmox-iso-ubuntu](https://github.com/Cinderblook/tacklebox/tree/main/Packer/Proxmox/packer-iso-ubuntu); Using Packer to create a configured Ubuntu tempalte
 
 ## [**Terraform**](https://github.com/Cinderblook/tacklebox/tree/main/Terraform) <img src="https://www.terraform.io/favicon.ico" alt="Terraform" width="40"> <br>
+
 *Azure:*
-* [Azure-Serv-Deploy](https://github.com/Cinderblook/tacklebox/tree/main/Terraform/Azure/Azure-Serv-Deploy); Creating multiple windows servers in Azure enrolled in a domain. This has functioning/active DHCP, DNS, and Active Directory. The environment has security groups, users, and memberships applied. 
+
+* [Azure-Serv-Deploy](https://github.com/Cinderblook/tacklebox/tree/main/Terraform/Azure/Azure-Serv-Deploy); Creating multiple windows servers in Azure enrolled in a domain. This has functioning/active DHCP, DNS, and Active Directory. The environment has security groups, users, and memberships applied.
+
 * [Azure-K8S-Deploy](https://github.com/Cinderblook/tacklebox/tree/main/Terraform/Azure/Azure-K8S-Deploy); Creating a Kubernetes cluster with AKS in Azure.
 
 *Spotify:*
+
 * [shuffle-playlist](https://github.com/Cinderblook/tacklebox/tree/main/Terraform/Spotify/shuffle-playlist); Automating the Creation of a custom spotify playlist using Spotify Developer tools.
 
 *vSphere:*
