@@ -86,7 +86,7 @@ source "proxmox" "ubuntu-server" {
         model = "virtio"
         bridge = "vmbr0"
         firewall = "false"
-        vlan_tag = "1"
+        #vlan_tag = "1"
     }
 
     # Configure Cloud-Init settings
@@ -97,7 +97,7 @@ source "proxmox" "ubuntu-server" {
     boot_command = [
         "<esc><wait><esc><wait><f6><wait><esc><wait>",
         "<bs><bs><bs><bs><bs>",
-         " autoinstall net.ifnames=0 biosdevname=0 ip=dhcp ipv6.disable=1 ds=nocloud-net;s=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ ",
+        "autoinstall net.ifnames=0 biosdevname=0 ip=dhcp ipv6.disable=1 ds=nocloud-net;s=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ ",
         "--- <enter>"   
     ]
     boot = "c"
