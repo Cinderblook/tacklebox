@@ -5,7 +5,7 @@ resource "proxmox_vm_qemu" "proxmox_multi_vm" {
   name        = "${var.linux_name}-${count.index}"
   desc        = "terraform deploy"
   target_node = "${var.PM_node}"
-
+  vmid        = "20${count.index}"
   clone = var.PM_template
 
   # The destination resource pool for the new VM
@@ -35,8 +35,11 @@ resource "proxmox_vm_qemu" "proxmox_multi_vm" {
     ]
   }
   #Cloud-init settings
-  ipconfig0 = "ip=${var.linux_ip}${count.index}/${var.linux_subnetmask},gw=${var.linux_gateway}"
-
+  #ipconfig0 = "ip=${var.linux_ip}${count.index}/${var.linux_subnetmask},gw=${var.linux_gateway}"
+  os_network_config = <<EOF
+auto eth0
+iface eth0 inet dhcp
+EOF
   sshkeys = var.ssh_keys
 
   provisioner "remote-exec" {
