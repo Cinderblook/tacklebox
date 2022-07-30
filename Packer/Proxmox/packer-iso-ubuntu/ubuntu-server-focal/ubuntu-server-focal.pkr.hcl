@@ -77,7 +77,7 @@ source "proxmox" "ubuntu-server" {
     memory = "2048"
     disks {
         disk_size = "32G"
-        format = "qcow2"
+        format = "raw"
         storage_pool = "${var.pm_storage_pool}"
         storage_pool_type = "${var.pm_storage_pool_type}"
         type = "sata"
