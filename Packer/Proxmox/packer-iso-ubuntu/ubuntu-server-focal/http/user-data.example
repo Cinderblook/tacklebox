@@ -10,8 +10,18 @@ autoinstall:
     disable_root: true
     ssh_quiet_keygen: true
     allow_public_ssh_keys: true
+  #identity:
+  #  hostname: ubuntu-server
+  #  username: user-here
+  #  password: SHA512-PASS
   packages:
     - qemu-guest-agent
+    - openssh-server
+    - open-vm-tools
+    - cloud-init
+    - whois
+    - zsh
+    - wget
     - sudo
   storage:
     layout:
@@ -22,12 +32,12 @@ autoinstall:
     package_upgrade: false
     timezone: America/New_York
     users:
-      - name: username-here
+      - name: name-here
         groups: [adm, sudo]
         lock-passwd: false
         sudo: ALL=(ALL) NOPASSWD:ALL
         shell: /bin/bash
-        # passwd: your-password
+        passwd: SHA512-PASS
         # - or -
         # ssh_authorized_keys:
         #   - your-ssh-key

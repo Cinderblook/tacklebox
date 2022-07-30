@@ -65,9 +65,9 @@ source "proxmox" "ubuntu-server" {
     # VM OS settings
     iso_file = "${var.iso_file}"
     #   You can also download an ISO
-    #iso_url = "https://releases.ubuntu.com/20.04/ubuntu-20.04.4-live-server-amd64.iso"
-    #iso_checksum = "28ccdb56450e643bad03bb7bcf7507ce3d8d90e8bf09e38f6bd9ac298a98eaad"
-    iso_storage_pool = "local"
+    iso_url = "https://releases.ubuntu.com/22.04/ubuntu-22.04-live-server-amd64.iso"
+    #iso_checksum = "84aeaf7823c8c61baa0ae862d0a06b03409394800000b3235854a6b38eb4856f"
+    #iso_storage_pool = "local"
     unmount_iso = true
 
     qemu_agent = true
@@ -95,12 +95,30 @@ source "proxmox" "ubuntu-server" {
 
     # Configure Packer boot commands
     boot_command = [
-    "e<down><down><down><end>",
-    "autoinstall net.ifnames=0 biosdevname=0 ip=dhcp ipv6.disable=1 ds=nocloud-net;s=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ ",
-    "<F10>",
+        " <wait>",
+        " <wait>",
+        " <wait>",
+        " <wait>",
+        " <wait>",
+        "c",
+        "<wait>",
+        "set gfxpayload=keep",
+        "<enter><wait>",
+        "linux /casper/vmlinuz <wait>",
+        " autoinstall<wait>",
+        " ds=nocloud-net<wait>",
+        "\\;s=http://<wait>",
+        "{{.HTTPIP}}<wait>",
+        ":{{.HTTPPort}}/<wait>",
+        " ---",
+        "<enter><wait>",
+        " initrd /casper/<wait>",
+        "/initrd<wait>",
+        "<enter><wait>",
+        "boot<enter><wait>"
     ]
     boot = "c"
-    boot_wait = "5s"
+    boot_wait = "10s"
 
     # Configure Packer autoinstall settings
     http_directory = "http"
@@ -109,10 +127,9 @@ source "proxmox" "ubuntu-server" {
     http_port_max = 8802
 
     # SSH connection settings
+    ssh_port = 22
     ssh_username = "${var.ssh_username}"
-    #     Use password
     ssh_password = "${var.ssh_password}"
-    #     Use private key file
     #ssh_private_key_file = "${var.ssh_private_key_file}"
     ssh_timeout = "20m"
 }
