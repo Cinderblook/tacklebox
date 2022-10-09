@@ -1,10 +1,15 @@
-[AnsibleSwitch:vars] 
+[Devices] 
+10.x.x.x
+10.x.x.x
+
+
+[AnsibleSwitchCisco:vars] 
 ansible_user=username
 ansible_password=password
 ansible_connection=cli 
 ansible_network_os=ios
 
-[AnsibleRouters:vars] 
+[AnsibleRoutersCisco:vars] 
 ansible_user=username
 ansible_password=password
 ansible_connection=cli 

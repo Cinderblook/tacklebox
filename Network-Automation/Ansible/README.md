@@ -9,7 +9,7 @@ To ping devices
 
 To pass playbooks
 `ansible-playbook ./playbooks/apt.yaml --user SSHUSERNAME --ask-pass --ask-become-pass -i ./hosts/hosts.yaml`
-
+ansible-playbook ./docker-setup.yaml --user SSHUSERNAME --ask-pass --ask-become-pass -i ./hosts/hosts.yaml
 Useful specific commands
 -i "Followed by inventory file"
 -u "Username for SSH"
