@@ -13,11 +13,14 @@ Using Terraform to configure environments within a plethora of platforms.
 **Azure:**
 * [Azure-Serv-Deploy](); Creating multiple windows servers in Azure enrolled in a domain. This has functioning/active DHCP, DNS, and Active Directory. The environment has security groups, users, and memberships applied. 
 * [Azure-K8S-Deploy](); Creating a Kubernetes cluster with AKS in Azure.
+* [Azure-VPN-Setup](); Creating a Linux client in Azure running OpenVPN with appropriate network and firewall configuration.
 
 **Proxmox:**
 * [deploy-vm](): Creating Virtual Machines in Proxmox from a template
+* [deploy-multi-vm](): Creating Virtual Machines in Proxmox from a template
 
 **Spotify:**
+* [multi-artist-playlist](); Automating the Creation of a custom spotify playlist using Spotify Developer tools.
 * [multi-artist-playlist](); Automating the Creation of a custom spotify playlist using Spotify Developer tools.
 
 **vSphere:**
