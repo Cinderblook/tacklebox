@@ -1,0 +1,17 @@
+# Azure Linux Server related params
+linux_vm_os_publisher = "Canonical"
+linux_vm_os_offer     = "UbuntuServer"
+linux_vm_os_sku       = "18.04-LTS"
+linux_vm_size         = "Standard_B1s"
+linux_ssh_key         = "location/of/public/ssh/key" # Generate key with `ssh-kegen`
+linux_sa_type         = "Premium_LRS"
+
+# Which administrator password to set during vm customization
+linux_username = "user" 
+linux_password = "pass"
+
+# Naming Schemes 
+linux_server   = "hostname"
+
+# Networking Variables
+myvpn_linux_priavte_ip     = "192.168.10.5"
