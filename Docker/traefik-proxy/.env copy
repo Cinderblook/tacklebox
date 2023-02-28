@@ -1,0 +1,4 @@
+CF_API_EMAIL=
+CF_API_KEY=
+BASICAUTHUSER=
+# create basic auth with: echo $(htpasswd -nb "<USER>" "<PASSWORD>") | sed -e s/\\$/\\$\\$/g

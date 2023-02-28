@@ -1,0 +1,156 @@
+@charset "UTF-8";
+
+/* Dracula theme for Homer */
+
+#app.theme-default.is-dark {
+    --dracula-background: #282a36;
+    --dracula-current-line: #44475a;
+    --dracula-foreground: #f8f8f2;
+    --dracula-comment: #6272a4;
+    --dracula-cyan: #8be9fd;
+    --dracula-green: #50fa7b;
+    --dracula-orange: #ffb86c;
+    --dracula-pink: #ff79c6;
+    --dracula-purple: #bd93f9;
+    --dracula-red: #ff5555;
+    --dracula-yellow: #f1fa8c;
+
+    --highlight-primary: transparent;
+    --highlight-secondary: var(--dracula-current-line);
+    --highlight-hover: var(--dracula-current-line);
+    --background: var(--dracula-background);
+    --highlight-hover: var(--dracula-current-line);
+    --card-background: var(--dracula-current-line);
+    --text: var(--dracula-foreground);
+    --text-header: var(--dracula-foreground);
+    --text-title: var(--dracula-foreground);
+    --text-subtitle: var(--dracula-cyan);
+    --link: var(--dracula-green);
+    --link-hover: var(--dracula-green);
+}
+
+/* Header */
+
+/* Comment the following section out if you want no header image. Also, set --highlight-primary to var(--dracula-current-line). */
+
+#app.theme-default.is-dark #bighead {
+    background-image: url("../assets/dracula-background.png");
+    background-size: cover;
+    background-position: center;
+}
+
+#app.theme-default.is-dark .logo {
+    color: var(--dracula-purple);
+}
+
+#app.theme-default.is-dark .first-line .headline {
+    color: var(--dracula-yellow);
+}
+
+#app.theme-default.is-dark .navbar-start i {
+    color: var(--dracula-cyan);
+}
+
+#app.theme-default.is-dark [title="Auto-switch"] {
+    color: var(--dracula-purple);
+}
+
+#app.theme-default.is-dark [title="Dark theme"] {
+    color: var(--dracula-orange);
+}
+
+#app.theme-default.is-dark .navbar-item .fa-columns {
+    color: var(--dracula-green);
+}
+
+#app.theme-default.is-dark .navbar-item .fa-list {
+    color: var(--dracula-cyan);
+}
+
+#app.theme-default.is-dark .search-bar .search-label:before {
+    color: var(--dracula-yellow);
+}
+
+#app.theme-default.is-dark .search-bar input {
+    background-color: var(--dracula-background);
+}
+
+#app.theme-default.is-dark .search-bar>input:nth-child(2) {
+    color: var(--dracula-foreground);
+}
+
+#app.theme-default.is-dark .search-bar input:focus-visible {
+    outline: none;
+}
+
+/* Message */
+
+#app.theme-default.is-dark .message-header {
+    color: var(--dracula-foreground);
+    background-color: var(--dracula-current-line);
+    border-style: none none solid none;
+    border-width: thin;
+}
+
+#app.theme-default.is-dark .is-info .message-header {
+    border-color: var(--dracula-cyan);
+}
+
+#app.theme-default.is-dark .is-info .message-header i {
+    color: var(--dracula-cyan);
+}
+
+#app.theme-default.is-dark .is-success .message-header {
+    border-color: var(--dracula-green);
+}
+
+#app.theme-default.is-dark .is-success .message-header i {
+    color: var(--dracula-green);
+}
+
+#app.theme-default.is-dark .is-warning .message-header {
+    border-color: var(--dracula-orange);
+}
+
+#app.theme-default.is-dark .is-warning .message-header i {
+    color: var(--dracula-orange);
+}
+
+#app.theme-default.is-dark .is-danger .message-header {
+    border-color: var(--dracula-red);
+}
+
+#app.theme-default.is-dark .is-danger .message-header i {
+    color: var(--dracula-red);
+}
+
+/* Cards */
+
+#app.theme-default.is-dark .tag {
+    background-color: var(--dracula-pink);
+    color: var(--dracula-foreground);
+}
+
+#app.theme-default.is-dark .status.unknown::before {
+    background-color: var(--dracula-yellow);
+    border-color: var(--dracula-yellow);
+    box-shadow: 0 0 5px 1px var(--dracula-yellow);
+}
+
+#app.theme-default.is-dark .status.bad::before {
+    background-color: var(--dracula-red);
+    border-color: var(--dracula-red);
+    box-shadow: 0 0 5px 1px var(--dracula-red);
+}
+
+#app.theme-default.is-dark .status.running::before {
+    background-color: var(--dracula-green);
+    border-color: var(--dracula-green);
+    box-shadow: 0 0 5px 1px var(--dracula-green);
+}
+
+/* Footer */
+
+#app.theme-default.is-dark .footer {
+    color: var(--dracula-foreground);
+}

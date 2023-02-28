@@ -1,0 +1,29 @@
+# Create search bar at top of page
+- search:
+    provider: google # google, duckduckgo, bing, baidu or custom
+    focus: true # Optional, will set focus to the search bar on page load
+    target: _blank # One of _self, _blank, _parent or _top
+
+# Date Display information
+- datetime:
+    text_size: xl
+    # 1/23/22, 1:37 PM
+    format:
+    dateStyle: short
+    timeStyle: short
+    hour12: true
+
+# Unifi Console Display information
+- unifi_console:
+    url: https://dreamrouter.local.cinderblook.com
+    username: ${DreamUser}
+    password: ${DreamPass}
+
+# Weather API Williamsport
+- openweathermap:
+    label: Williamsport #optional
+    latitude: 41.241489
+    longitude: -77.041924
+    units: imperial # metric or imperial
+    apiKey: "17fdd7474517650d235851f5c1e339a6"
+    cache: 5 # Time in minutes to cache API responses, to stay within limits

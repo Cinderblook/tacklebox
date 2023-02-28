@@ -1,0 +1,23 @@
+---
+version: '3.1'
+
+services:
+  mysql:
+    image: mysql:latest
+    restart: always
+    container_name: mysql
+    ports:
+      - 3306:3306
+    expose:
+      - "3306"
+    volumes:
+      - ./mysql-data:/var/lib/mysql/
+    environment:
+      - MYSQL_ROOT_PASSWORD=${PASS}
+
+# Database commands to run to setup user and database
+# ----------------------------------------------
+#CREATE DATABASE k3s COLLATE latin1_swedish_ci;
+#CREATE USER ‘user’@’%’ IDENTIFIED BY ‘password’;
+#GRANT ALL ON k3s.* TO 'user'@'%';
+#FLUSH PRIVILEGES;

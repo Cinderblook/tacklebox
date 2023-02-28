@@ -1,0 +1,32 @@
+
+version: "3.1"
+
+services:
+  uptime-kuma:
+    image: louislam/uptime-kuma:1
+    container_name: uptime-kuma
+    volumes:
+      - ./data:/app/data
+    ports:
+      - 3001:3001
+    networks:
+      - proxy
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.kuma.entrypoints=http"
+      - "traefik.http.routers.kuma.rule=Host(`kuma.local.cinderblook.com`)"
+      - "traefik.http.middlewares.kuma-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.kuma.middlewares=kuma-https-redirect"
+      - "traefik.http.routers.kuma-secure.entrypoints=https"
+      - "traefik.http.routers.kuma-secure.rule=Host(`kuma.local.cinderblook.com`)"
+      - "traefik.http.routers.kuma-secure.tls=true"
+      - "traefik.http.routers.kuma-secure.service=kuma"
+      - "traefik.http.services.kuma.loadbalancer.server.port=3001"
+      - "traefik.docker.network=proxy"
+
+networks:
+  proxy:
+    external: true

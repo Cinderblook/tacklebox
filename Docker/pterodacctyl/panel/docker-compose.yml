@@ -1,0 +1,111 @@
+version: '3.8'
+x-common:
+  database:
+    &db-environment
+    # Do not remove the "&db-password" from the end of the line below, it is important
+    # for Panel functionality.
+    MYSQL_PASSWORD: &db-password ${MYSQLPASS}
+    MYSQL_ROOT_PASSWORD: ${PASS}
+  panel:
+    &panel-environment
+    APP_URL: "https://pterodactyl.local.cinderblook.com"
+    # A list of valid timezones can be found here: http://php.net/manual/en/timezones.php
+    APP_TIMEZONE: "America/Chicago"
+    APP_SERVICE_AUTHOR: ${EMAIL}
+    TRUSTED_PROXIES: "*" # Set this to your proxy IP
+    # Uncomment the line below and set to a non-empty value if you want to use Let's Encrypt
+    # to generate an SSL certificate for the Panel.
+    # LE_EMAIL: ""
+  mail:
+    &mail-environment
+    MAIL_FROM: ${EMAIL}
+    MAIL_DRIVER: "smtp"
+    MAIL_HOST: "mail"
+    MAIL_PORT: "1025"
+    MAIL_USERNAME: ${EMAIL}
+    MAIL_PASSWORD: ${PASS}
+    MAIL_ENCRYPTION: "true"
+
+#
+# ------------------------------------------------------------------------------------------
+# DANGER ZONE BELOW
+#
+# The remainder of this file likely does not need to be changed. Please only make modifications
+# below if you understand what you are doing.
+#
+services:
+  database:
+    image: mariadb:10.5
+    restart: unless-stopped
+    networks:
+      - local
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - "./database:/var/lib/mysql"
+    environment:
+      <<: *db-environment
+      MYSQL_DATABASE: "panel"
+      MYSQL_USER: "pterodactyl"
+  cache:
+    image: redis:alpine
+    restart: unless-stopped
+    networks:
+      - local
+  panel:
+    image: ghcr.io/pterodactyl/panel:latest
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - pterodactyl
+      - local      
+    links:
+      - database
+      - cache
+    volumes:
+      - "/var/pterodactyl/var/:/app/var/"
+      - "./nginx/:/etc/nginx/http.d/"
+      - "./certs/:/etc/letsencrypt/"
+      - "/var/pterodactyl/logs/:/app/storage/logs"
+    environment:
+      <<: [*panel-environment, *mail-environment]
+      DB_PASSWORD: *db-password
+      APP_ENV: "production"
+      APP_ENVIRONMENT_ONLY: "false"
+      CACHE_DRIVER: "redis"
+      SESSION_DRIVER: "redis"
+      QUEUE_DRIVER: "redis"
+      REDIS_HOST: "cache"
+      DB_HOST: "database"
+      DB_PORT: "3306"
+      #TRUSTED_PROXIES: "*"
+    
+networks:
+  local:
+    external: false
+  pterodactyl:
+    external: true
+  default:
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+# If using on Traefik
+#labels:
+    #  - "traefik.enable=true"
+    #  - "traefik.http.routers.pterodactyl_panel-unsecure.entrypoints=http"
+    #  - "traefik.http.routers.pterodactyl_panel-unsecure.rule=Host(`pterodactyl.local.cinderblook.com`)"
+    #  - "traefik.http.middlewares.pterodactyl_panel-https-redirect.redirectscheme.scheme=https"
+    #  - "traefik.http.routers.pterodactyl_panel.middlewares=pterodactyl_panel-https-redirect"
+    #  - "traefik.http.routers.pterodactyl_panel-secure.entrypoints=https"
+    #  - "traefik.http.routers.pterodactyl_panel-secure.rule=Host(`pterodactyl.local.cinderblook.com`)"
+    #  - "traefik.http.routers.pterodactyl_panel-secure.tls=true"
+    #  - "traefik.http.routers.pterodactyl_panel-secure.service=pterodactyl_panel"
+    #  - "traefik.http.services.pterodactyl_panel.loadbalancer.server.port=3003"
+    #  - "traefik.tcp.routers.pterodactyl_panel-sftp.entrypoints=sftp"
+    #  - "traefik.tcp.routers.pterodactyl_panel-sftp.rule=HostSNI(`pterodactyl.local.cinderblook.com`)"
+    #  - "traefik.tcp.routers.pterodactyl_panel-sftp.service=pterodactyl_panel-sftp"
+    #  - "traefik.tcp.routers.pterodactyl_panel-sftp.tls=true"
+    #  - "traefik.tcp.services.pterodactyl_panel-sftp.loadbalancer.server.port=2222"
+    #  - "traefik.tcp.middlewares.pterodactyl_panel-sftp.middlewares=pterodactyl_panel-default-whitelist"
+    #  - "traefik.docker.network=proxy"

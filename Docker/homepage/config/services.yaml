@@ -1,0 +1,72 @@
+#- Informative:
+- Services:
+    # Uptime Kuma
+    - Uptime Kuma:
+        icon: kuma.png
+        href: https://kuma.local.cinderblook.com
+        description: "Service Monitor"
+    # Portainer
+    - Portainer:
+        icon: portainer.png
+        href: https://portainer.local.cinderblook.com
+        description: "Container Management"
+    # Pterodactyl
+    - Pterodactyl:
+        icon: pterodactyl.png
+        href: https://pterodactyl.local.cinderblook.com
+        description: "Game Servers"
+    # SpeedTest
+    - SpeedTest:
+        icon: speed.png
+        href: http://speedtest.local.cinderblook.com:8765
+        description: "Network Speed"
+        widget:
+            type: speedtest
+            url: http://speedtest.local.cinderblook.com:8765
+    # TeslaMate
+    - TeslaMate:
+        icon: teslamate.png
+        href: https://teslamate.local.cinderblook.com
+        description: Its Electric
+    # TeslaMate Grafana
+    - GrafanaMate:
+        icon: gfteslamate.png
+        href: https://gfteslamate.local.cinderblook.com
+        description: Charts for TeslaMate
+- Core:
+    # PiHole
+    - Pihole:
+        icon: pihole.png
+        href: http://pihole.local.cinderblook.com/
+        description: "DNS n Ads"
+        widget:
+          type: pihole
+          url: http://pihole.local.cinderblook.com/
+    # Unifi
+    - Unifi:
+        icon: dreamrouter.png
+        href: https://dreamrouter.local.cinderblook.com
+        description: "Network Infrastructure"
+        widget:
+          type: unifi
+          url: https://dreamrouter.local.cinderblook.com
+          username: ${DreamUser}
+          password: ${DreamPass}
+    # Traefik
+    - Traefik:
+        icon: traefik.png
+        href: https://traefik-internal.local.cinderblook.com/
+        description: "Traffic Controller"
+        widget:
+          type: traefik
+          url: https://traefik-internal.local.cinderblook.com
+    # Proxxmox
+    - Proxmox:
+        icon: proxmox.png
+        href: https://proxmox.local.cinderblook.com/
+        description: "Traffic Controller"
+        widget:
+          type: proxmox
+          url: https://proxmox.local.cinderblook.com:8006
+          username: ${PROXUSER}
+          password: ${PROXPASS}

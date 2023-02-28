@@ -1,0 +1,156 @@
+#GitHub Repo:https://github.com/adriankumpf/teslamate
+#Simple Guides:https://docs.teslamate.org/docs/installation/docker/ && https://docs.teslamate.org/docs/guides/traefik
+version: "3"
+
+services:
+  teslamate:
+    image: teslamate/teslamate:latest
+    restart: always
+    depends_on:
+      - database
+    environment:
+      - ENCRYPTION_KEY=${TM_ENCRYPTION_KEY}
+      - DATABASE_USER=${TM_DB_USER}
+      - DATABASE_PASS=${TM_DB_PASS}
+      - DATABASE_NAME=${TM_DB_NAME}
+      - DATABASE_HOST=database
+      - MQTT_HOST=mosquitto
+      - VIRTUAL_HOST=${FQDN_TM}
+      - CHECK_ORIGIN=true
+      - TZ=${TM_TZ}
+    ports:
+      - 4000:4000
+    volumes:
+      - ./import:/opt/app/import
+    security_opt:
+      - no-new-privileges:true
+    networks:
+      - proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.port=4000"
+      - "traefik.docker.network=proxy"   
+      - "traefik.http.middlewares.teslamate-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.teslamate.entrypoints=http"      
+      - "traefik.http.routers.teslamate.rule=Host(`${FQDN_TM}`)"
+      - "traefik.http.routers.teslamate.middlewares=teslamate-https-redirect"
+      - "traefik.http.routers.teslamate-secure.entrypoints=https"
+      - "traefik.http.routers.teslamate-secure.tls=true"
+      - "traefik.http.routers.teslamate-secure.rule=Host(`${FQDN_TM}`)"
+      - "traefik.http.routers.teslamate-secure.service=teslamate"      
+      - "traefik.http.services.teslamate.loadbalancer.server.port=4000"     
+# Websecure Basic Auth config   
+      - "traefik.http.middlewares.teslamate-auth.basicauth.realm=teslamate"
+      - "traefik.http.middlewares.teslamate-auth.basicauth.usersfile=/auth/.htpasswd"
+      - "traefik.http.routers.teslamate-ws.rule=Host(`${FQDN_TM}`) && Path(`/live/websocket`)"
+      - "traefik.http.routers.teslamate-ws.entrypoints=https"
+      - "traefik.http.routers.teslamate-ws.tls=true"
+      - "traefik.http.routers.teslamate.middlewares=teslamate-auth"
+      - "traefik.http.routers.teslamate.tls=true"
+    cap_drop:
+      - all
+
+  database:
+    image: postgres:14
+    restart: always
+    environment:
+      - POSTGRES_USER=${TM_DB_USER}
+      - POSTGRES_DB=${TM_DB_NAME}
+      - POSTGRES_HOST_AUTH_METHOD=scram-sha-256
+      - POSTGRES_INITDB_ARGS=--auth-host=scram-sha-256
+      - POSTGRES_PASSWORD=${TM_DB_PASS}
+    networks:
+      - proxy 
+    ports:
+      - 5432:5432
+    volumes:
+      - teslamate-db:/var/lib/postgresql/data
+
+  grafana:
+    image: teslamate/grafana:latest
+    restart: always
+    environment:
+      - DATABASE_USER=${TM_DB_USER}
+      - DATABASE_PASS=${TM_DB_PASS}
+      - DATABASE_NAME=${TM_DB_NAME}
+      - DATABASE_HOST=database
+      - GRAFANA_PASSWD=${GRAFANA_PW}
+      - GF_SECURITY_ADMIN_USER=${GRAFANA_USER}
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PW}
+      - GF_AUTH_ANONYMOUS_ENABLED=false
+      - GF_SERVER_DOMAIN=${FQDN_GF}
+      - GF_SERVER_ROOT_URL=%(protocol)s://%(domain)s/grafana
+      - GF_SERVER_SERVE_FROM_SUB_PATH=true
+    ports:
+      - 3010:3000
+    networks:
+      - proxy
+    volumes:
+      - teslamate-grafana-data:/var/lib/grafana
+    #labels:
+    #  - "traefik.enable=true"
+    #  - "traefik.http.middlewares.grafana-https-redirect.redirectscheme.scheme=https"
+    #  - "traefik.http.routers.grafana.entrypoints=http"      
+    #  - "traefik.http.routers.grafana.rule=Host(`${FQDN_GF}`)"
+    #  - "traefik.http.routers.grafana.middlewares=grafana-https-redirect"
+    #  - "traefik.http.routers.grafana-secure.rule=Host(`${FQDN_GF}`)"
+   #   - "traefik.http.routers.grafana-secure.rule=Host(`${FQDN_TM}`) && (Path(`/grafana`) || PathPrefix(`/grafana/`))"
+    #  - "traefik.http.routers.grafana-secure.entrypoints=https"
+    #  - "traefik.http.routers.grafana-secure.tls=true"
+    #  - "traefik.http.routers.grafana-secure.service=grafana-teslamate"      
+    #  - "traefik.http.services.grafana-teslamate.loadbalancer.server.port=3010"
+      ###
+    labels:
+      - "traefik.enable=true"
+      - "traefik.port=3010"
+      - "traefik.network=proxy"
+      - "traefik.http.routers.grafana.entrypoints=http"
+      - "traefik.http.middlewares.redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.grafana.rule=Host(`${FQDN_GF}`)"
+      - "traefik.http.routers.grafana.middlewares=redirect"
+      - "traefik.http.routers.grafana-secure.rule=Host(`${FQDN_GF}`)"
+      - "traefik.http.routers.grafana-secure.entrypoints=https"
+      - "traefik.http.routers.grafana-secure.tls=true"
+      - "traefik.http.services.grafana.loadbalancer.server.port=3010"  
+  mosquitto:
+    image: eclipse-mosquitto:2
+    restart: always
+    command: mosquitto -c /mosquitto-no-auth.conf
+    ports:
+      - 127.0.0.1:1883:1883
+    networks:
+      - proxy
+    volumes:
+      - mosquitto-conf:/mosquitto/config
+      - mosquitto-data:/mosquitto/data
+
+  #proxy:
+  #  image: traefik:v2.7
+  #  restart: always
+  #  command:
+  #    - "--global.sendAnonymousUsage=false"
+  #    - "--providers.docker"
+  #    - "--providers.docker.exposedByDefault=false"
+  #    - "--entrypoints.web.address=:80"
+  #    - "--entrypoints.websecure.address=:443"
+  #    - "--certificatesresolvers.tmhttpchallenge.acme.httpchallenge=true"
+  #    - "--certificatesresolvers.tmhttpchallenge.acme.httpchallenge.entrypoint=web"
+  #    - "--certificatesresolvers.tmhttpchallenge.acme.email=${LETSENCRYPT_EMAIL}"
+  #    - "--certificatesresolvers.tmhttpchallenge.acme.storage=/etc/acme/acme.json"
+  #  ports:
+  #    - 80:80
+  #    - 443:443
+  #  volumes:
+  #    - ./.htpasswd:/auth/.htpasswd
+  #    - ./acme/:/etc/acme/
+  #    - /var/run/docker.sock:/var/run/docker.sock:ro
+
+volumes:
+  teslamate-db:
+  teslamate-grafana-data:
+  mosquitto-conf:
+  mosquitto-data:
+
+networks:
+  proxy:
+    external: true

@@ -1,0 +1,287 @@
+http:
+ #region routers 
+  routers:
+# Proxmox https
+    proxmox:
+      entryPoints:
+        - "https"
+      rule: "Host(`proxmox.local.cinderblook.com`)"
+      middlewares:
+        - default-headers
+        - https-redirectscheme
+      tls: {}
+      service: proxmox
+# Pihole http
+    pihole:
+      entryPoints:
+        - "http"
+      rule: "Host(`pihole.local.cinderblook.com`)"
+      middlewares:
+        - https-redirectscheme
+      service: pihole
+# Pihole https
+    pihole-secure:
+      entryPoints:
+        - "https"
+      rule: "Host(`pihole.local.cinderblook.com`)"
+      middlewares:
+        - default-headers
+        - addprefix-admin
+      tls: {}
+      service: pihole          
+# Dreamrouter http
+    dreamrouter:
+      entryPoints:
+        - "http"
+      rule: "Host(`dreamrouter.local.cinderblook.com`)"
+      middlewares:
+        - https-redirectscheme
+      service: dreamrouter
+# Dreamrouter https
+    dreamrouter-secure:
+      entryPoints:
+        - "https"
+      rule: "Host(`dreamrouter.local.cinderblook.com`)"
+      middlewares:
+        - default-headers
+      tls: {}
+      service: dreamrouter
+# Pterodactyl http
+    pterodactyl:
+      entryPoints:
+        - "http"
+      rule: "Host(`pterodactyl.local.cinderblook.com`)"
+      middlewares:
+        - https-redirectscheme
+      service: pterodactyl
+# Pterodactyl https
+    pterodactyl-secure:
+      entryPoints:
+        - "https"
+      rule: "Host(`pterodactyl.local.cinderblook.com`)"
+      middlewares:
+        - default-headers
+      tls: {}
+      service: pterodactyl
+# Pterodactyl_wings http
+    pterodactyl_wings-node01:
+      entryPoints:
+        - "http"
+      rule: "Host(`gamenode-01.local.cinderblook.com`)"
+      middlewares:
+        - https-redirectscheme
+      service: pterodactyl_wings-node01
+# Pterodactyl_wings https
+    pterodactyl_wings-node01-secure:
+      entryPoints:
+        - "https"
+      rule: "Host(`gamenode-01.local.cinderblook.com`)"
+      middlewares:
+        - default-headers
+      tls: {}
+      service: pterodactyl_wings-node01
+# rancher http
+#    rancher:
+#      entryPoints:
+#        - "http"
+#      rule: "Host(`rancher.local.cinderblook.com`)"
+#      middlewares:
+#        - https-redirectscheme
+#      service: rancher
+# rancher https
+#    rancher-secure:
+#      entryPoints:
+#        - "https"
+#      rule: "Host(`rancher.local.cinderblook.com`)"
+#      middlewares:
+#        - default-headers
+#      tls: {}
+#      service: rancher
+# openvpn http
+    openvpn:
+      entryPoints:
+        - "http"
+      rule: "Host(`vpn.local.cinderblook.com`)"
+      middlewares:
+        - https-redirectscheme
+      service: openvpn
+# openvpn https
+    openvpn-secure:
+      entryPoints:
+        - "https"
+      rule: "Host(`vpn.local.cinderblook.com`)"
+      middlewares:
+        - default-headers
+      tls: {}
+      service: openvpn
+#region services
+  services:
+# Proxmox Loadbalancer
+    proxmox:
+      loadBalancer:
+        servers:
+          - url: "https://192.168.1.80:8006"
+        passHostHeader: true
+# Pihole Loadbalancer
+    pihole:
+      loadBalancer:
+        servers:
+          - url: "http://192.168.1.253:80"
+        passHostHeader: true
+# Dreamrouter Loadbalancer
+    dreamrouter:
+      loadBalancer:
+        servers:
+          - url: "https://192.168.1.1:443"
+        passHostHeader: true
+# Pterodactyl Loadbalancer
+    pterodactyl:
+      loadBalancer:
+        servers:
+          - url: "http://192.168.1.242:80"
+        passHostHeader: true 
+# Pterodactyl_wings Loadbalancer   
+    pterodactyl_wings-node01:
+      loadBalancer:
+        servers:
+          - url: "http://192.168.1.240:443"
+        passHostHeader: true
+# Rancher Loadbalancer   
+#    rancher:
+#      loadBalancer:
+#        servers:
+#          - url: "https://192.168.1.237:443"
+#          - url: "https://192.168.1.238:443"
+#          - url: "https://192.168.1.239:443"
+#        passHostHeader: true
+# Openvpn Loadbalancer
+    openvpn:
+      loadBalancer:
+        servers:
+          - url: "https://192.168.1.245:943"
+        passHostHeader: true
+#endregion
+  middlewares:
+# Prefix all traffic to admin page
+    addprefix-admin:
+      addPrefix:
+        prefix: "/admin"
+# Redirect all http traffic to https
+    https-redirectscheme:
+      redirectScheme:
+        scheme: https
+        permanent: true
+# Add default headers for redirection
+    default-headers:
+      headers:
+        frameDeny: true
+        browserXssFilter: true
+        contentTypeNosniff: true
+        forceSTSHeader: true
+        stsIncludeSubdomains: true
+        stsPreload: true
+        stsSeconds: 15552000
+        customFrameOptionsValue: SAMEORIGIN
+        customRequestHeaders:
+          X-Forwarded-Proto: https
+#
+    idrac:
+      headers:
+        frameDeny: true
+        browserXssFilter: true
+        forceSTSHeader: true
+        stsIncludeSubdomains: true
+        stsSeconds: 15552000
+        customFrameOptionsValue: SAMEORIGIN
+        customRequestHeaders:
+          X-Forwarded-Proto: https
+# Whitelist all private IP addresses
+    default-whitelist:
+      ipWhiteList:
+        sourceRange:
+          - "10.0.0.0/8"
+          - "192.168.0.0/16"
+          - "172.16.0.0/12"
+#
+    secured:
+      chain:
+        middlewares:
+          - default-whitelist
+          - default-headers
+
+tcp:
+  routers:
+# Pterodactyl SFTP
+    pterodactyl_panel-sftp:
+      entryPoints: sftp
+      rule: "HostSNI(`pterodactyl.local.cinderblook.com`)"
+      service: pterodactyl_panel-sftp
+      middlewares: default-whitelist
+      tls: {}
+# Pterodactyl_Wings SFTP 
+    pterodactyl_wings-node01-sftp:
+      entryPoints: sftp
+      rule: "HostSNI(`gamenode-01.local.cinderblook.com`)"
+      service: pterodactyl_wings-node01-sftp
+      middlewares: default-whitelist
+      tls: {}
+# Pterodactyl_Wings port
+    pterodactyl_wings-node01:
+      entryPoints: wings-service
+      rule: "HostSNI(`gamenode-01.local.cinderblook.com`)"
+      service: pterodactyl_wings-node01
+      middlewares: default-whitelist
+      tls: {}
+# Pterodactyl_Wings-Minecraft
+    pterodactyl_wings-minecraft:
+      entryPoints: wings-minecraft
+      rule: "HostSNI(`gamenode-01.local.cinderblook.com`)"
+      service: pterodactyl_wings-minecraft
+      middlewares: default-whitelist
+      tls: {}
+# k3s port    
+    k3s:
+      entryPoints:
+        - k3s
+      rule: "HostSNI(`k3s.local.cinderblook.com`)"
+      service: k3s
+      middlewares: default-whitelist
+      tls: 
+        passthrough: true
+# Load balancers - Services
+  services:
+# Pterodactyl SFTP
+    pterodactyl_panel-sftp:
+      loadBalancer:
+        servers:
+          - address: "192.168.1.240:2022"
+# Pterodactyl_Wings SFTP 
+    pterodactyl_wings-node01-sftp:
+      loadBalancer:
+        servers:
+          - address: "192.168.1.240:2022"
+# Pterodactyl_Wings port
+    pterodactyl_wings-node01:
+      loadBalancer:
+        servers:
+          - address: "192.168.1.240:8080"
+# Pterodactyl_Wings-Minecraft
+    pterodactyl_wings-minecraft:
+      loadBalancer:
+        servers:
+          - address: "192.168.1.240:28000"
+# k3s loadbalancer
+    k3s:
+      loadBalancer:
+        servers:
+        - address: "192.168.1.235:6443"
+        #- address: "192.168.1.236:6443"
+# Whitelist all private IP addresses
+  middlewares:
+    default-whitelist:
+      ipWhiteList:
+        sourceRange:
+          - "10.0.0.0/8"
+          - "192.168.0.0/16"
+          - "172.16.0.0/12"
+
