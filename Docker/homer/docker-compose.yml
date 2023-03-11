@@ -2,7 +2,7 @@
 version: "2"
 services:
   homer:
-    image: b4bz/homer:latest
+    image: b4bz/homer:latest 
     restart: unless-stopped
 #To build from source, comment previous line and uncomment below
     #build: .

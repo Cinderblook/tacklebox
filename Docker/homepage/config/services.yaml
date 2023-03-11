@@ -2,7 +2,7 @@
 - Services:
     # Uptime Kuma
     - Uptime Kuma:
-        icon: kuma.png
+        icon: uptime-kuma.svg
         href: https://kuma.local.cinderblook.com
         description: "Service Monitor"
     # Portainer
@@ -17,7 +17,7 @@
         description: "Game Servers"
     # SpeedTest
     - SpeedTest:
-        icon: speed.png
+        icon: speedtest.svg
         href: http://speedtest.local.cinderblook.com:8765
         description: "Network Speed"
         widget:
@@ -28,11 +28,11 @@
         icon: teslamate.png
         href: https://teslamate.local.cinderblook.com
         description: Its Electric
-    # TeslaMate Grafana
-    - GrafanaMate:
+    # Your_spotify
+    - Spotify Data:
         icon: gfteslamate.png
-        href: https://gfteslamate.local.cinderblook.com
-        description: Charts for TeslaMate
+        href: https://spotify.local.cinderblook.com
+        description: Charts for Spotify
 - Core:
     # PiHole
     - Pihole:
@@ -44,7 +44,7 @@
           url: http://pihole.local.cinderblook.com/
     # Unifi
     - Unifi:
-        icon: dreamrouter.png
+        icon: unifi.png
         href: https://dreamrouter.local.cinderblook.com
         description: "Network Infrastructure"
         widget:

@@ -5,7 +5,7 @@ version: "3"
 services:
   teslamate:
     image: teslamate/teslamate:latest
-    restart: always
+    restart: unless-stopped
     depends_on:
       - database
     environment:
