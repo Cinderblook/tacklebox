@@ -2,7 +2,7 @@
 
 # Categories
 Distinct layout of what is throughout this repository. Some notable projects are shown for each category.
-## [**Packer**](https://github.com/Cinderblook/tacklebox/tree/main/Packer) <img src="https://www.packer.io/packer/favicon.ico" alt="Packer" width="40"> <br>
+## [**Packer**](https://github.com/Cinderblook/tacklebox/tree/main/Packer) <img src="https://www.packer.io/favicon.ico" alt="Packer" width="40"> <br>
 
 * [proxmox-iso-ubuntu](https://github.com/Cinderblook/tacklebox/tree/main/Packer/Proxmox/packer-iso-ubuntu); Using Packer to create a configured Ubuntu tempalte within Proxmox environment
 
@@ -34,5 +34,5 @@ Distinct layout of what is throughout this repository. Some notable projects are
 ## [**Kubernetes**](https://github.com/Cinderblook/tacklebox/tree/main/Kubernetes) <img src="https://kubernetes.io/images/favicon.png" alt="Kubernetes" width="40"> 
 * [k3s-HACluster-Rancher](https://github.com/Cinderblook/tacklebox/tree/main/Kubernetes/k3s-HACluster-Rancher); Create a highly available K3S Cluster managed with Rancher.
 
-## [**Docker**](https://github.com/Cinderblook/tacklebox/tree/main/Docker) <img src="https://icons8.com/icon/cdYUlRaag9G9/docker" alt="Docker" width="40">
+## [**Docker**](https://github.com/Cinderblook/tacklebox/tree/main/Docker) <img src="https://www.docker.com/favicon.ico" alt="Docker" width="40">
 * Some homelab Docker-Compose services I've dabbled with and ran
