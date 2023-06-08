@@ -1,5 +1,5 @@
 - hosts: "*"
-  become: true
+  become: yes
   tasks:
     - name: apt
     become: true
