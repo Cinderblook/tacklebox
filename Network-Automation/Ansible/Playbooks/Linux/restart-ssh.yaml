@@ -7,10 +7,12 @@
         name: ssh
         state: restarted
       become: true
+      ignore_errors: yes
     - name: Restart sssd daemon
       service:
         name: sssd
         state: stopped
+      ignore_errors: yes
       become: true
     - name: Restart httpd daemon
       service:
