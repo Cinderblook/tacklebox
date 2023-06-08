@@ -5,3 +5,4 @@
         update_cache: yes
         upgrade: 'yes'
       become: true
+      become_method: su
