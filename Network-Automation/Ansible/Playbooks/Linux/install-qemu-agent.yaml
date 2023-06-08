@@ -1,7 +1,7 @@
 - name: install latest qemu-guest-agent
   hosts: "*"
   become: true
-  become_method: su
+  become_method: sudo
   tasks:
     - name: install qemu-guest-agent
       apt:
