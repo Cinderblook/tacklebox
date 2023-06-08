@@ -1,0 +1,19 @@
+---
+- hosts: "*"
+  gather_facts: no
+  become: true
+  become_method: su
+  tasks:
+  
+    - name: Find logs
+      find:
+        paths: /var/log/
+        patterns: '*.log'
+        recurse: yes
+      register: _logs
+
+    - name: Fetch logs
+      fetch:
+        src: "{{ item.path }}"
+        dest: /tmp/logs
+      with_items: "{{ _logs.files }}"

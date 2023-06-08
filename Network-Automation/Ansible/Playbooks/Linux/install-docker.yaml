@@ -1,5 +1,6 @@
 - hosts: "*"
-  become: yes
+  become: true
+  become_method: su
   tasks:
     - name: Install docker
       apt:

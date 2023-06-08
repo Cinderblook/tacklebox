@@ -1,9 +1,10 @@
 - name: install latest qemu-guest-agent
-  hosts: all
+  hosts: "*"
+  become: true
+  become_method: su
   tasks:
     - name: install qemu-guest-agent
       apt:
         name: qemu-guest-agent
         state: present
         update_cache: true
-      become: true

@@ -1,0 +1,18 @@
+---
+- hosts: "*"
+  gather_facts: no
+  become: true
+  become_method: su
+  tasks:
+    - name: Restart ssh daemon
+      service:
+        name: ssh
+        state: restarted
+    - name: Restart sssd daemon
+      service:
+        name: sssd
+        state: stopped
+    - name: Restart httpd daemon
+      service:
+        name: httpd
+        state: started
