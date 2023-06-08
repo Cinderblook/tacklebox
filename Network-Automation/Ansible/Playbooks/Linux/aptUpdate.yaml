@@ -2,7 +2,7 @@
   become: yes
   tasks:
     - name: apt
-    become: true
+      become: true
       apt:
         update_cache: yes
         upgrade: yes
