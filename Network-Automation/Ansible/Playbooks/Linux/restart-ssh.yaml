@@ -18,4 +18,5 @@
       service:
         name: httpd
         state: started
+      ignore_errors: yes
       become: true

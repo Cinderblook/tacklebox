@@ -1,3 +1,4 @@
+---
 - hosts: "*"
   tasks:
     - name: Install docker
