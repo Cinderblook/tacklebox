@@ -1,0 +1,65 @@
+services:
+  mysql:
+    restart: unless-stopped
+    ports:
+      - 3336:3306
+    image: mysql:8.0
+    hostname: mysql-semaphore
+    volumes:
+      - semaphore-mysql:/var/lib/mysql
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
+      MYSQL_DATABASE: semaphore
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASS}
+    networks:
+      - proxy
+  semaphore:
+    restart: unless-stopped
+    ports:
+      - 3100:3000
+    image: semaphoreui/semaphore:latest
+    environment:
+      SEMAPHORE_DB_USER: ${MYSQL_USER}
+      SEMAPHORE_DB_PASS: ${MYSQL_PASS}
+      SEMAPHORE_DB_HOST: mysql-semaphore
+      SEMAPHORE_DB_PORT: 3306 
+      SEMAPHORE_DB_DIALECT: mysql
+      SEMAPHORE_DB: semaphore
+      SEMAPHORE_PLAYBOOK_PATH: /tmp/semaphore/
+      SEMAPHORE_ADMIN_PASSWORD: ${SEMA_ADMIN_PASS}
+      SEMAPHORE_ADMIN_NAME: ${SEMA_ADMIN_USER}
+      SEMAPHORE_ADMIN_EMAIL: ${SEMA_ADMIN_EMAIL}
+      SEMAPHORE_ADMIN: ${SEMA_ADMIN_USER}
+      SEMAPHORE_ACCESS_KEY_ENCRYPTION: ${SEMA_ACCESS_KEY} # Generate using command 'head -c32 /dev/urandom | base64'
+      #SEMAPHORE_LDAP_ACTIVATED: 'no' 
+      #SEMAPHORE_LDAP_HOST: dc01.local.example.com
+      #SEMAPHORE_LDAP_PORT: '636'
+      #SEMAPHORE_LDAP_NEEDTLS: 'yes'
+      #SEMAPHORE_LDAP_DN_BIND: 'uid=bind_user,cn=users,cn=accounts,dc=local,dc=shiftsystems,dc=net'
+      #SEMAPHORE_LDAP_PASSWORD: 'ldap_bind_account_password'
+      #SEMAPHORE_LDAP_DN_SEARCH: 'dc=local,dc=example,dc=com'
+      #SEMAPHORE_LDAP_SEARCH_FILTER: "(\u0026(uid=%s)(memberOf=cn=ipausers,cn=groups,cn=accounts,dc=local,dc=example,dc=com))"
+    depends_on:
+      - mysql 
+    networks:
+      - proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.semaphore.entrypoints=http"
+      - "traefik.http.routers.semaphore.rule=Host(`${DNS_HOSTNAME_CLIENT}`)"
+      - "traefik.http.middlewares.semaphore-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.semaphore.middlewares=semaphore-https-redirect"
+      - "traefik.http.routers.semaphore-secure.entrypoints=https"
+      - "traefik.http.routers.semaphore-secure.rule=Host(`${DNS_HOSTNAME_CLIENT}`)"
+      - "traefik.http.routers.semaphore-secure.tls=true"
+      - "traefik.http.routers.semaphore-secure.service=semaphore"
+      - "traefik.http.services.semaphore.loadbalancer.server.port=3000"
+      - "traefik.docker.network=proxy"
+
+networks:
+  proxy:
+    external: true
+
+volumes:
+  semaphore-mysql: 
