@@ -1,18 +1,19 @@
 ---
 - hosts: "*"
   gather_facts: no
-  become: true
-  become_method: sudo
   tasks:
     - name: Restart ssh daemon
       service:
         name: ssh
         state: restarted
+      become: true
     - name: Restart sssd daemon
       service:
         name: sssd
         state: stopped
+      become: true
     - name: Restart httpd daemon
       service:
         name: httpd
         state: started
+      become: true

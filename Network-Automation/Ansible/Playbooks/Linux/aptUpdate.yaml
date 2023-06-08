@@ -1,8 +1,7 @@
 - hosts: "*"
-  become: true
-  become_method: sudo
   tasks:
     - name: apt
       apt:
         update_cache: yes
         upgrade: 'yes'
+      become: true
