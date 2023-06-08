@@ -1,0 +1,25 @@
+---
+- hosts: "*"
+  become: true
+  become_method: sudo
+  tasks:
+    - name: Capture timestamp
+      shell: date +"%Y%m%d%H%M%S"
+      register: current_date_time
+      become: true
+    
+    - name: Check Uptime
+      shell: "uptime"
+      register: uptime
+      become: true
+    
+    - name: Output Uptime
+      debug: msg={{ uptime.stdout_lines }}
+    
+    - name: Create dump directory
+      file: path=/var/tmp state=directory mode=0755
+      become: true
+       
+    - name: Fetch the output file
+      fetch: src=/var/tmp/uptime-{{ inventory_hostname }}-{{ current_date_time.stdout }}.txt dest=/var/tmp/uptime-{{ inventory_hostname }}-{{ current_date_time.stdout }}.txt flat=yes
+      become: true

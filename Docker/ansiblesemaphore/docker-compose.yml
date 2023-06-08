@@ -19,6 +19,8 @@ services:
     ports:
       - 3100:3000
     image: semaphoreui/semaphore:latest
+    volumes:
+      - ./logs:/tmp/logs
     environment:
       SEMAPHORE_DB_USER: ${MYSQL_USER}
       SEMAPHORE_DB_PASS: ${MYSQL_PASS}
