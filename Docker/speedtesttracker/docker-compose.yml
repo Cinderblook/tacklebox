@@ -31,7 +31,7 @@ services:
           - "traefik.http.routers.speedtest-secure.rule=Host(`speedtest.local.cinderblook.com`)"
           - "traefik.http.routers.speedtest-secure.tls=true"
           - "traefik.http.routers.speedtest-secure.service=speedtest"
-          - "traefik.http.services.speedtest.loadbalancer.server.port=8765"
+          - "traefik.http.services.speedtest.loadbalancer.server.port=80"
           - "traefik.docker.network=proxy"
 
 networks:

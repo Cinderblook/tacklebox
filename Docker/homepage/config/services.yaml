@@ -18,11 +18,11 @@
     # SpeedTest
     - SpeedTest:
         icon: speed.png
-        href: http://speedtest.local.cinderblook.com:8765
+        href: https://speedtest.local.cinderblook.com
         description: "Network Speed"
         widget:
             type: speedtest
-            url: http://speedtest.local.cinderblook.com:8765
+            url: https://speedtest.local.cinderblook.com
     # TeslaMate
     - TeslaMate:
         icon: teslamate.png

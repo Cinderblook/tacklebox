@@ -2,11 +2,8 @@ services:
   mysql:
     restart: unless-stopped
     ports:
-      - 3336:3306
-    image: mysql:8.0
-    hostname: mysql-semaphore
     volumes:
-      - semaphore-mysql:/var/lib/mysql
+      - ./data:/var/lib/mysql
     environment:
       MYSQL_RANDOM_ROOT_PASSWORD: 'yes'
       MYSQL_DATABASE: semaphore
