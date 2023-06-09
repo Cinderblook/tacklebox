@@ -33,6 +33,11 @@
         icon: spotify.png
         href: https://spotify.local.cinderblook.com
         description: Charts for Spotify
+    # Ansible Semaphora
+    - Ansible Semaphora:
+        icon: ansible.png
+        href: https://semaphora.local.cinderblook.com
+        description: Ansible 
 - Core:
     # PiHole
     - Pihole:
