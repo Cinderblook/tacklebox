@@ -5,7 +5,7 @@ http:
     proxmox:
       entryPoints:
         - "https"
-      rule: "Host(`proxmox.local.cinderblook.com`)"
+      rule: "Host(`proxmox.cinderblock.tech`)"
       middlewares:
         - default-headers
         - https-redirectscheme
@@ -15,7 +15,7 @@ http:
     pihole:
       entryPoints:
         - "http"
-      rule: "Host(`pihole.local.cinderblook.com`)"
+      rule: "Host(`pihole.cinderblock.tech`)"
       middlewares:
         - https-redirectscheme
       service: pihole
@@ -23,7 +23,7 @@ http:
     pihole-secure:
       entryPoints:
         - "https"
-      rule: "Host(`pihole.local.cinderblook.com`)"
+      rule: "Host(`pihole.cinderblock.tech`)"
       middlewares:
         - default-headers
         - addprefix-admin
@@ -33,7 +33,7 @@ http:
     dreamrouter:
       entryPoints:
         - "http"
-      rule: "Host(`dreamrouter.local.cinderblook.com`)"
+      rule: "Host(`dreamrouter.cinderblock.tech`)"
       middlewares:
         - https-redirectscheme
       service: dreamrouter
@@ -41,7 +41,7 @@ http:
     dreamrouter-secure:
       entryPoints:
         - "https"
-      rule: "Host(`dreamrouter.local.cinderblook.com`)"
+      rule: "Host(`dreamrouter.cinderblock.tech`)"
       middlewares:
         - default-headers
       tls: {}
@@ -50,7 +50,7 @@ http:
     pterodactyl:
       entryPoints:
         - "http"
-      rule: "Host(`pterodactyl.local.cinderblook.com`)"
+      rule: "Host(`pterodactyl.cinderblock.tech`)"
       middlewares:
         - https-redirectscheme
       service: pterodactyl
@@ -58,7 +58,7 @@ http:
     pterodactyl-secure:
       entryPoints:
         - "https"
-      rule: "Host(`pterodactyl.local.cinderblook.com`)"
+      rule: "Host(`pterodactyl.cinderblock.tech`)"
       middlewares:
         - default-headers
       tls: {}
@@ -67,7 +67,7 @@ http:
     pterodactyl_wings-node01:
       entryPoints:
         - "http"
-      rule: "Host(`gamenode-01.local.cinderblook.com`)"
+      rule: "Host(`gamenode-01.cinderblock.tech`)"
       middlewares:
         - https-redirectscheme
       service: pterodactyl_wings-node01
@@ -75,7 +75,7 @@ http:
     pterodactyl_wings-node01-secure:
       entryPoints:
         - "https"
-      rule: "Host(`gamenode-01.local.cinderblook.com`)"
+      rule: "Host(`gamenode-01.cinderblock.tech`)"
       middlewares:
         - default-headers
       tls: {}
@@ -84,7 +84,7 @@ http:
 #    rancher:
 #      entryPoints:
 #        - "http"
-#      rule: "Host(`rancher.local.cinderblook.com`)"
+#      rule: "Host(`rancher.cinderblock.tech`)"
 #      middlewares:
 #        - https-redirectscheme
 #      service: rancher
@@ -92,7 +92,7 @@ http:
 #    rancher-secure:
 #      entryPoints:
 #        - "https"
-#      rule: "Host(`rancher.local.cinderblook.com`)"
+#      rule: "Host(`rancher.cinderblock.tech`)"
 #      middlewares:
 #        - default-headers
 #      tls: {}
@@ -101,7 +101,7 @@ http:
     openvpn:
       entryPoints:
         - "http"
-      rule: "Host(`vpn.local.cinderblook.com`)"
+      rule: "Host(`vpn.cinderblock.tech`)"
       middlewares:
         - https-redirectscheme
       service: openvpn
@@ -109,7 +109,7 @@ http:
     openvpn-secure:
       entryPoints:
         - "https"
-      rule: "Host(`vpn.local.cinderblook.com`)"
+      rule: "Host(`vpn.cinderblock.tech`)"
       middlewares:
         - default-headers
       tls: {}
@@ -214,28 +214,28 @@ tcp:
 # Pterodactyl SFTP
     pterodactyl_panel-sftp:
       entryPoints: sftp
-      rule: "HostSNI(`pterodactyl.local.cinderblook.com`)"
+      rule: "HostSNI(`pterodactyl.cinderblock.tech`)"
       service: pterodactyl_panel-sftp
       middlewares: default-whitelist
       tls: {}
 # Pterodactyl_Wings SFTP 
     pterodactyl_wings-node01-sftp:
       entryPoints: sftp
-      rule: "HostSNI(`gamenode-01.local.cinderblook.com`)"
+      rule: "HostSNI(`gamenode-01.cinderblock.tech`)"
       service: pterodactyl_wings-node01-sftp
       middlewares: default-whitelist
       tls: {}
 # Pterodactyl_Wings port
     pterodactyl_wings-node01:
       entryPoints: wings-service
-      rule: "HostSNI(`gamenode-01.local.cinderblook.com`)"
+      rule: "HostSNI(`gamenode-01.cinderblock.tech`)"
       service: pterodactyl_wings-node01
       middlewares: default-whitelist
       tls: {}
 # Pterodactyl_Wings-Minecraft
     pterodactyl_wings-minecraft:
       entryPoints: wings-minecraft
-      rule: "HostSNI(`gamenode-01.local.cinderblook.com`)"
+      rule: "HostSNI(`gamenode-01.cinderblock.tech`)"
       service: pterodactyl_wings-minecraft
       middlewares: default-whitelist
       tls: {}
@@ -243,7 +243,7 @@ tcp:
     k3s:
       entryPoints:
         - k3s
-      rule: "HostSNI(`k3s.local.cinderblook.com`)"
+      rule: "HostSNI(`k3s.cinderblock.tech`)"
       service: k3s
       middlewares: default-whitelist
       tls: 

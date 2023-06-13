@@ -1,6 +1,7 @@
 services:
   mysql:
     restart: unless-stopped
+    container_name: semaphore-mysql
     ports:
     volumes:
       - ./data:/var/lib/mysql
@@ -16,6 +17,7 @@ services:
     ports:
       - 3100:3000
     image: semaphoreui/semaphore:latest
+    container_name: semaphore
     volumes:
       - ./logs:/tmp/logs
     environment:

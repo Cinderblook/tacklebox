@@ -4,7 +4,7 @@ http:
     proxmox:
       entryPoints:
         - "https"
-      rule: "Host(`proxmox.local.cinderblook.com`)"
+      rule: "Host(`proxmox.cinderblock.tech`)"
       middlewares:
         - default-headers
         - https-redirectscheme
@@ -13,7 +13,7 @@ http:
     pihole:
       entryPoints:
         - "https"
-      rule: "Host(`pihole.local.cinderblook.com`)"
+      rule: "Host(`pihole.cinderblock.tech`)"
       middlewares:
         - default-headers
         - addprefix-pihole

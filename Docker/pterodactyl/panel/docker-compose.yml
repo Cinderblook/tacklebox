@@ -8,7 +8,7 @@ x-common:
     MYSQL_ROOT_PASSWORD: ${PASS}
   panel:
     &panel-environment
-    APP_URL: "https://pterodactyl.local.cinderblook.com"
+    APP_URL: "https://pterodactyl.cinderblock.tech"
     # A list of valid timezones can be found here: http://php.net/manual/en/timezones.php
     APP_TIMEZONE: "America/Chicago"
     APP_SERVICE_AUTHOR: ${EMAIL}
@@ -26,16 +26,10 @@ x-common:
     MAIL_PASSWORD: ${PASS}
     MAIL_ENCRYPTION: "true"
 
-#
-# ------------------------------------------------------------------------------------------
-# DANGER ZONE BELOW
-#
-# The remainder of this file likely does not need to be changed. Please only make modifications
-# below if you understand what you are doing.
-#
 services:
   database:
     image: mariadb:10.5
+    container_name: pterodactyl-mariadb
     restart: unless-stopped
     networks:
       - local
@@ -48,11 +42,13 @@ services:
       MYSQL_USER: "pterodactyl"
   cache:
     image: redis:alpine
+    container_name: pterodactyl-cache
     restart: unless-stopped
     networks:
       - local
   panel:
     image: ghcr.io/pterodactyl/panel:latest
+    container_name: pterodactyl-panel
     restart: unless-stopped
     ports:
       - "80:80"
@@ -64,10 +60,10 @@ services:
       - database
       - cache
     volumes:
-      - "/var/pterodactyl/var/:/app/var/"
+      - "./var/:/app/var/"
       - "./nginx/:/etc/nginx/http.d/"
       - "./certs/:/etc/letsencrypt/"
-      - "/var/pterodactyl/logs/:/app/storage/logs"
+      - "./logs/:/app/storage/logs"
     environment:
       <<: [*panel-environment, *mail-environment]
       DB_PASSWORD: *db-password
@@ -94,16 +90,16 @@ networks:
 #labels:
     #  - "traefik.enable=true"
     #  - "traefik.http.routers.pterodactyl_panel-unsecure.entrypoints=http"
-    #  - "traefik.http.routers.pterodactyl_panel-unsecure.rule=Host(`pterodactyl.local.cinderblook.com`)"
+    #  - "traefik.http.routers.pterodactyl_panel-unsecure.rule=Host(`pterodactyl.cinderblock.tech`)"
     #  - "traefik.http.middlewares.pterodactyl_panel-https-redirect.redirectscheme.scheme=https"
     #  - "traefik.http.routers.pterodactyl_panel.middlewares=pterodactyl_panel-https-redirect"
     #  - "traefik.http.routers.pterodactyl_panel-secure.entrypoints=https"
-    #  - "traefik.http.routers.pterodactyl_panel-secure.rule=Host(`pterodactyl.local.cinderblook.com`)"
+    #  - "traefik.http.routers.pterodactyl_panel-secure.rule=Host(`pterodactyl.cinderblock.tech`)"
     #  - "traefik.http.routers.pterodactyl_panel-secure.tls=true"
     #  - "traefik.http.routers.pterodactyl_panel-secure.service=pterodactyl_panel"
     #  - "traefik.http.services.pterodactyl_panel.loadbalancer.server.port=3003"
     #  - "traefik.tcp.routers.pterodactyl_panel-sftp.entrypoints=sftp"
-    #  - "traefik.tcp.routers.pterodactyl_panel-sftp.rule=HostSNI(`pterodactyl.local.cinderblook.com`)"
+    #  - "traefik.tcp.routers.pterodactyl_panel-sftp.rule=HostSNI(`pterodactyl.cinderblock.tech`)"
     #  - "traefik.tcp.routers.pterodactyl_panel-sftp.service=pterodactyl_panel-sftp"
     #  - "traefik.tcp.routers.pterodactyl_panel-sftp.tls=true"
     #  - "traefik.tcp.services.pterodactyl_panel-sftp.loadbalancer.server.port=2222"

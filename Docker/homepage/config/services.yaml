@@ -3,75 +3,75 @@
     # Uptime Kuma
     - Uptime Kuma:
         icon: kuma.png
-        href: https://kuma.local.cinderblook.com
+        href: https://kuma.cinderblock.tech
         description: "Service Monitor"
     # Portainer
     - Portainer:
         icon: portainer.png
-        href: https://portainer.local.cinderblook.com
+        href: https://portainer.cinderblock.tech
         description: "Container Management"
     # Pterodactyl
     - Pterodactyl:
         icon: pterodactyl.png
-        href: https://pterodactyl.local.cinderblook.com
+        href: https://pterodactyl.cinderblock.tech
         description: "Game Servers"
     # SpeedTest
     - SpeedTest:
         icon: speed.png
-        href: https://speedtest.local.cinderblook.com
+        href: https://speedtest.cinderblock.tech
         description: "Network Speed"
         widget:
             type: speedtest
-            url: https://speedtest.local.cinderblook.com
+            url: https://speedtest.cinderblock.tech
     # TeslaMate
     - TeslaMate:
         icon: teslamate.png
-        href: https://teslamate.local.cinderblook.com
+        href: https://teslamate.cinderblock.tech
         description: Its Electric
     # Your_spotify
     - Spotify Data:
         icon: spotify.png
-        href: https://spotify.local.cinderblook.com
+        href: https://spotify.cinderblock.tech
         description: Charts for Spotify
     # Ansible Semaphora
     - Ansible Semaphora:
         icon: ansible.png
-        href: https://semaphora.local.cinderblook.com
+        href: https://semaphora.cinderblock.tech
         description: Ansible 
 - Core:
     # PiHole
     - Pihole:
         icon: pihole.png
-        href: http://pihole.local.cinderblook.com/
+        href: http://pihole.cinderblock.tech/
         description: "DNS n Ads"
         widget:
           type: pihole
-          url: http://pihole.local.cinderblook.com/
+          url: http://pihole.cinderblock.tech/
     # Unifi
     - Unifi:
         icon: unifi.png
-        href: https://dreamrouter.local.cinderblook.com
+        href: https://dreamrouter.cinderblock.tech
         description: "Network Infrastructure"
         widget:
           type: unifi
-          url: https://dreamrouter.local.cinderblook.com
+          url: https://dreamrouter.cinderblock.tech
           username: ${DreamUser}
           password: ${DreamPass}
     # Traefik
     - Traefik:
         icon: traefik.png
-        href: https://traefik-internal.local.cinderblook.com/
+        href: https://traefik-internal.cinderblock.tech/
         description: "Traffic Controller"
         widget:
           type: traefik
-          url: http://traefik-internal.local.cinderblook.com
+          url: http://traefik-internal.cinderblock.tech
     # Proxxmox
     - Proxmox:
         icon: proxmox.png
-        href: https://proxmox.local.cinderblook.com/
+        href: https://proxmox.cinderblock.tech/
         description: "Traffic Controller"
         widget:
           type: proxmox
-          url: https://proxmox.local.cinderblook.com:8006
+          url: https://proxmox.cinderblock.tech:8006
           username: ${PROXUSER}
           password: ${PROXPASS}

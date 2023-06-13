@@ -32,7 +32,7 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.traefik.entrypoints=http"
-      - "traefik.http.routers.traefik.rule=Host(`traefik-internal.local.cinderblook.com`)"
+      - "traefik.http.routers.traefik.rule=Host(`traefik-internal.cinderblock.tech`)"
       - "traefik.http.middlewares.traefik-auth.basicauth.users=${BASICAUTHUSER}"
       # Take note, using a $ in the .env file, will double the amount of '$' signs being pulled over.
       # Double check config variables with 'docker-compose config' to see .env results
@@ -41,12 +41,12 @@ services:
       - "traefik.http.middlewares.sslheader.headers.customrequestheaders.X-Forwarded-Proto=https"
       - "traefik.http.routers.traefik.middlewares=traefik-https-redirect"
       - "traefik.http.routers.traefik-secure.entrypoints=https"
-      - "traefik.http.routers.traefik-secure.rule=Host(`traefik-internal.local.cinderblook.com`)"
+      - "traefik.http.routers.traefik-secure.rule=Host(`traefik-internal.cinderblock.tech`)"
       - "traefik.http.routers.traefik-secure.middlewares=traefik-auth"
       - "traefik.http.routers.traefik-secure.tls=true"
       - "traefik.http.routers.traefik-secure.tls.certresolver=cloudflare"
-      - "traefik.http.routers.traefik-secure.tls.domains[0].main=local.cinderblook.com"
-      - "traefik.http.routers.traefik-secure.tls.domains[0].sans=*.local.cinderblook.com"
+      - "traefik.http.routers.traefik-secure.tls.domains[0].main=cinderblock.tech"
+      - "traefik.http.routers.traefik-secure.tls.domains[0].sans=*.cinderblock.tech"
       - "traefik.http.routers.traefik-secure.service=api@internal"
 
 networks:

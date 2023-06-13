@@ -121,7 +121,7 @@ services:
       - name: "Zeus"
         logo: "assets/tools/proxmox.png"
         type: "Proxmox"
-        url: "https://proxmox.local.cinderblook.com"
+        url: "https://proxmox.cinderblock.tech"
         node: "zeus"
         warning_value: 50
         danger_value: 80
@@ -130,13 +130,13 @@ services:
       - name: "Uptime Kuma"
         logo: "assets/tools/kuma.png"
         subtitle: "Service Monitor" # optional, if no subtitle is defined, Uptime Kuma incidents, if any, will be shown
-        url: "https://kuma.local.cinderblook.com"
+        url: "https://kuma.cinderblock.tech"
         slug: "dashboard" # Defaults to "default" if not provided.
         type: "UptimeKuma"
       
       - name: "Portainer"
         logo: "assets/tools/portainer.png"
-        url: "https://portainer.local.cinderblook.com"
+        url: "https://portainer.cinderblock.tech"
         type: "Portainer"
         apikey: "MY-SUPER-SECRET-API-KEY"
         # environments:
@@ -150,7 +150,7 @@ services:
         subtitle: "Game Servers"
         tag: "app"
         keywords: "Hosting Platform" # optional keyword used for searching purpose
-        url: "https://pterodactyl.local.cinderblook.com"
+        url: "https://pterodactyl.cinderblock.tech"
         target: "_blank" # optional html tag target attribute
       
   - name: "Core Services"
@@ -160,7 +160,7 @@ services:
         logo: "assets/tools/pihole.png"
         subtitle: "Ads + DNS" # optional, if no subtitle is defined, PiHole statistics will be shown
         tag: "core"
-        url: "http://pihole.local.cinderblook.com/admin"
+        url: "http://pihole.cinderblock.tech/admin"
         type: "PiHole" # optional, loads a specific component that provides extra features. MUST MATCH a file name (without file extension) available in `src/components/services`
         target: "_blank" # optional html a tag target attribute
         # class: "green" # optional custom CSS class for card, useful with custom stylesheet
@@ -169,7 +169,7 @@ services:
         logo: "assets/tools/dreamrouter.png"
         subtitle: "Unifi" # optional, if no subtitle is defined, PiHole statistics will be shown
         tag: "core"
-        url: "https://dreamrouter.local.cinderblook.com"
+        url: "https://dreamrouter.cinderblock.tech"
         target: "_blank" # optional html a tag target attribute
         # class: "green" # optional custom CSS class for card, useful with custom stylesheet
         # background: red # optional color for card to set color directly without custom stylesheet

@@ -1,7 +1,7 @@
 #Title
 title: Cinderblook Landing Strip
 headerStyle: boxed
-base: dash.local.cinderblook.com
+base: dash.cinderblock.tech
 background: /images/WashingtonShore.png # Points to /images folder - mounted in docker-compose
 backgroundOpacity: 0.5
 
