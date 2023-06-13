@@ -20,7 +20,7 @@
       file: path=/var/tmp state=directory mode=0755
       become: true
        
-    - name: print memory size
+    - name: print timestamp
       debug:
         msg: "Current Time: {{ current_date_time.stdout }}"
       tags:

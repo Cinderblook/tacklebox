@@ -1,9 +1,4 @@
-
-
-How to run tasks in playbook according to the specified tag?
-
-The command line can specify tags through -- tags.
-
+---
 - name: get userid
   shell: id
   register: userid
