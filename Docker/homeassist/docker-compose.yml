@@ -19,11 +19,11 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.homeassist.entrypoints=http"
-      - "traefik.http.routers.homeassist.rule=Host(`homeassist.local.cinderblook.com`)"
+      - "traefik.http.routers.homeassist.rule=Host(`homeassist.cinderblock.tech`)"
       - "traefik.http.middlewares.homeassist-https-redirect.redirectscheme.scheme=https"
       - "traefik.http.routers.homeassist.middlewares=homeassist-https-redirect"
       - "traefik.http.routers.homeassist-secure.entrypoints=https"
-      - "traefik.http.routers.homeassist-secure.rule=Host(`homeassist.local.cinderblook.com`)"
+      - "traefik.http.routers.homeassist-secure.rule=Host(`homeassist.cinderblock.tech`)"
       - "traefik.http.routers.homeassist-secure.tls=true"
       - "traefik.http.routers.homeassist-secure.service=homeassist"
       - "traefik.http.services.homeassist.loadbalancer.server.port=8123"

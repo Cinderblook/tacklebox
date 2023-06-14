@@ -20,6 +20,12 @@
       file: path=/var/tmp state=directory mode=0755
       become: true
        
-    - name: Fetch the output file
-      fetch: src=/var/tmp/uptime-{{ inventory_hostname }}-{{ current_date_time.stdout }}.txt dest=/var/tmp/uptime-{{ inventory_hostname }}-{{ current_date_time.stdout }}.txt flat=yes
-      become: true
+    - name: print timestamp
+      debug:
+        msg: "Current Time: {{ current_date_time.stdout }}"
+      tags:
+        - time_stamp
+      
+    #- name: Fetch the output file
+    #  fetch: src=/var/tmp/uptime-{{ inventory_hostname }}-{{ current_date_time.stdout }}.txt dest=/var/tmp/uptime-{{ inventory_hostname }}-{{ current_date_time.stdout }}.txt flat=yes
+    #  become: true

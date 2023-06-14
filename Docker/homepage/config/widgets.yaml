@@ -15,7 +15,7 @@
 
 # Unifi Console Display information
 - unifi_console:
-    url: https://dreamrouter.local.cinderblook.com
+    url: https://dreamrouter.cinderblock.tech
     username: ${DreamUser}
     password: ${DreamPass}
 

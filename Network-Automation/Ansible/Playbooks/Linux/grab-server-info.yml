@@ -1,0 +1,39 @@
+- hosts: "*"
+  gather_facts: no
+  tasks:
+    - name: get userid
+      shell: id
+      register: userid
+      tags:
+        - userid
+    
+    - name: print userid
+      debug: 
+        msg: "userid: {{ userid.stdout }}"
+      tags:
+        - userid
+    
+    - name: get cpu core num
+      shell: lscpu|awk '/^CPU\(s\):/{print $2}'
+      register: cpu_core_num
+      tags:
+        - cpu_core_num
+    
+    - name: print cpu core num
+      debug:
+        msg: "CPU num: {{ cpu_core_num.stdout }}"
+      tags:
+        - cpu_core_num
+    
+    - name: get memory size
+      shell: free -g|awk '/Mem/{print $2}'
+      register: memory_size
+      tags:
+        - memory_size
+    
+    - name: print memory size
+      debug:
+        msg: "memory: {{ memory_size.stdout }}G"
+      tags:
+        - memory_size
+

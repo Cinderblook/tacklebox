@@ -5,6 +5,7 @@ version: "3"
 services:
   teslamate:
     image: teslamate/teslamate:latest
+    container_name: teslamte
     restart: unless-stopped
     depends_on:
       - database
@@ -52,6 +53,7 @@ services:
 
   database:
     image: postgres:14
+    container_name: teslamte-postgres
     restart: always
     environment:
       - POSTGRES_USER=${TM_DB_USER}
@@ -68,6 +70,7 @@ services:
 
   grafana:
     image: teslamate/grafana:latest
+    container_name: teslamate-grafana
     restart: always
     environment:
       - DATABASE_USER=${TM_DB_USER}
@@ -114,6 +117,7 @@ services:
       - "traefik.http.services.grafana.loadbalancer.server.port=3010"  
   mosquitto:
     image: eclipse-mosquitto:2
+    container_name: teslamate-mosquitto
     restart: always
     command: mosquitto -c /mosquitto-no-auth.conf
     ports:

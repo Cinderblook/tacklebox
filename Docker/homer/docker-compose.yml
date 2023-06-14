@@ -19,11 +19,11 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.homer.entrypoints=http"
-      - "traefik.http.routers.homer.rule=Host(`home.local.cinderblook.com`)"
+      - "traefik.http.routers.homer.rule=Host(`home.cinderblock.tech`)"
       - "traefik.http.middlewares.homer-https-redirect.redirectscheme.scheme=https"
       - "traefik.http.routers.homer.middlewares=homer-https-redirect"
       - "traefik.http.routers.homer-secure.entrypoints=https"
-      - "traefik.http.routers.homer-secure.rule=Host(`home.local.cinderblook.com`)"
+      - "traefik.http.routers.homer-secure.rule=Host(`home.cinderblock.tech`)"
       - "traefik.http.routers.homer-secure.tls=true"
       - "traefik.http.routers.homer-secure.service=homer"
       - "traefik.http.services.homer.loadbalancer.server.port=8080"
