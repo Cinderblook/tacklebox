@@ -28,6 +28,11 @@
       set_fact:
         k3s_token: "{{ k3s_token_output.stdout }}"
       when: inventory_hostname == primary_master
+    
+    - name: Share K3s token with all hosts
+      set_fact:
+        k3s_token: "{{ hostvars[primary_master].k3s_token }}"
+      run_once: true
 
     - name: Join other nodes as workers
       shell: curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=v1.21.4+k3s1 K3S_URL=https://{{ hostvars[primary_master].inventory_hostname }}:6443 K3S_TOKEN={{ k3s_token }} sh
