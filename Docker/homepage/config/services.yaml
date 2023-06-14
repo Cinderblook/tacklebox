@@ -17,7 +17,7 @@
         description: "Game Servers"
     # SpeedTest
     - SpeedTest:
-        icon: speed.png
+        icon: openspeedtest.png
         href: http://speedtest.local.cinderblook.com:8765
         description: "Network Speed"
         widget:
@@ -38,10 +38,14 @@
         icon: ansible.png
         href: https://semaphora.local.cinderblook.com
         description: Ansible 
+    - OpenVPN:
+        icon: openvpn.png
+        href: https://vpn.cinderblook.com
+        description: VPN Solution
 - Core:
     # PiHole
     - Pihole:
-        icon: pihole.png
+        icon: pi-hole.png
         href: http://pihole.local.cinderblook.com/
         description: "DNS n Ads"
         widget:
