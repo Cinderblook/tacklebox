@@ -29,6 +29,12 @@
         dest: k3s_token.txt
       when: inventory_hostname == primary_master
 
+    - name: Copy K3s token file to worker nodes
+      copy:
+        src: k3s_token.txt
+        dest: /tmp/k3s_token.txt
+      when: inventory_hostname != primary_master
+
     - name: Join other nodes as workers
-      shell: curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=v1.21.4+k3s1 K3S_URL=https://{{ hostvars[primary_master].inventory_hostname }}:6443 K3S_TOKEN=$(cat k3s_token.txt) sh -
+      shell: curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=v1.21.4+k3s1 K3S_URL=https://{{ hostvars[primary_master].inventory_hostname }}:6443 K3S_TOKEN=$(cat /tmp/k3s_token.txt) sh
       when: inventory_hostname != primary_master
