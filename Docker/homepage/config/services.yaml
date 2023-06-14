@@ -38,6 +38,16 @@
         icon: ansible.png
         href: https://semaphora.cinderblock.tech
         description: Ansible 
+    # Rancher
+    - Rancher:
+        icon: rancher.png
+        href: https://rancher.cinderblock.tech
+        description: K3S-Management
+    # OpenVPN
+    - OpenVPN:
+        icon: openvpn.png
+        href: https://vpn.cinderblock.tech
+        description: VPN Solution
 - Core:
     # PiHole
     - Pihole:
