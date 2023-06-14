@@ -7,6 +7,7 @@
 
   vars:
     primary_master: "{{ groups['k3s_nodes'][0] }}" 
+    k3s_token: ""  # Variable to store the K3s token
 
   tasks:
     - name: Install required packages
@@ -20,21 +21,14 @@
 
     - name: Retrieve K3s token on primary master
       shell: cat /var/lib/rancher/k3s/server/node-token
-      register: k3s_token
+      register: k3s_token_output
       when: inventory_hostname == primary_master
 
-    - name: Save K3s token on primary master to a file
-      copy:
-        content: "{{ k3s_token.stdout }}"
-        dest: k3s_token.txt
+    - name: Save K3s token on primary master to a variable
+      set_fact:
+        k3s_token: "{{ k3s_token_output.stdout }}"
       when: inventory_hostname == primary_master
-
-    - name: Copy K3s token file to worker nodes
-      copy:
-        src: k3s_token.txt
-        dest: /tmp/k3s_token.txt
-      when: inventory_hostname != primary_master
 
     - name: Join other nodes as workers
-      shell: curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=v1.21.4+k3s1 K3S_URL=https://{{ hostvars[primary_master].inventory_hostname }}:6443 K3S_TOKEN=$(cat /tmp/k3s_token.txt) sh
+      shell: curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=v1.21.4+k3s1 K3S_URL=https://{{ hostvars[primary_master].inventory_hostname }}:6443 K3S_TOKEN={{ k3s_token }} sh
       when: inventory_hostname != primary_master
