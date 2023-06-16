@@ -10,6 +10,11 @@
     dest_dir: "{{ backup_dir }}/{{ inventory_hostname }}-{{ ansible_date_time.iso8601_basic }}-backup"
 
   tasks:
+    - name: Install rsync
+      package:
+        name: rsync
+        state: present
+
     - name: Create backup directory
       file:
         path: "{{ dest_dir }}"

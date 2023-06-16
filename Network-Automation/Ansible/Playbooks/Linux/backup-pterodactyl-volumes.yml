@@ -13,6 +13,11 @@
       - "/var/lib/pterodactyl"
 
   tasks:
+    - name: Install rsync
+      package:
+        name: rsync
+        state: present
+            
     - name: Create backup directory
       file:
         path: "{{ dest_dir }}"
