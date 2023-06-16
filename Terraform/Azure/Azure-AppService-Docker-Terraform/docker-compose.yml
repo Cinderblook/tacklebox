@@ -1,0 +1,11 @@
+---
+nginx-web:
+  image: nginx
+  volumes:
+   - ./templates:/etc/nginx/templates
+  ports:
+   - "80:80"
+   - "443:443"
+  environment:
+   - NGINX_HOST=linux-webapp-01-71234..azurewebsites.net
+   - NGINX_PORT=443
