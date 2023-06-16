@@ -28,7 +28,8 @@
         src: "{{ item }}"
         dest: "{{ dest_dir }}/pterodactyl/etc/{{ item | basename }}"
       with_items: "{{ pterodactyl_dirs }}"
-
+      vars:
+        ansible_shell_executable: /usr/bin/rsync
     - name: Backup data from /var/lib/pterodactyl
       synchronize:
         src: "{{ item }}"

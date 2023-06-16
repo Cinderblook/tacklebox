@@ -9,3 +9,6 @@ layout:
   Core:
     style: row
     columns: 4
+  Data:
+    style: row
+    columns: 3

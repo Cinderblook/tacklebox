@@ -24,6 +24,8 @@
       synchronize:
         src: "{{ source_dir }}"
         dest: "{{ dest_dir }}"
+      vars:
+        ansible_shell_executable: /usr/bin/rsync
 
     - name: Verify backup
       stat:

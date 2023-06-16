@@ -1,14 +1,6 @@
 #- Informative:
 - Services:
-    # Uptime Kuma
-    - Uptime Kuma:
-        icon: kuma.png
-        href: https://kuma.cinderblock.tech
-        description: "Service Monitor"
-        widget:
-            type: uptimekuma
-            url: http://kuma.cinderblock.tech
-            slug: homepage-status
+
     
     # Portainer
     - Portainer:
@@ -31,27 +23,6 @@
             url: http://pterodactyl.cinderblock.tech
             key: ${pterodactyl-key}
     
-    # SpeedTest
-    - SpeedTest:
-        icon: speed-test.png
-        href: https://speedtest.cinderblock.tech
-        description: "Network Speed"
-        widget:
-            type: speedtest
-            url: https://speedtest.cinderblock.tech
-    
-    # TeslaMate
-    - TeslaMate:
-        icon: teslamate.png
-        href: https://teslamate.cinderblock.tech
-        description: Its Electric
-    
-    # Your_spotify
-    - Spotify Data:
-        icon: spotify.png
-        href: https://spotify.cinderblock.tech
-        description: Charts for Spotify
-    
     # Ansible Semaphora
     - Ansible Semaphora:
         icon: ansible.png
@@ -70,13 +41,6 @@
         href: https://vpn.cinderblock.tech
         description: VPN Solution
     
-    # Minecraft
-    - Minecraft:
-        icon: minecaft.png
-        widget:
-            type: minecraft
-            url: udp://minecraft.cinderblock.tech
-
 - Core:
     # PiHole
     - Pihole:
@@ -118,3 +82,39 @@
           url: https://proxmox.cinderblock.tech:8006
           username: ${PROXUSER}
           password: ${PROXPASS}
+- Data:
+    # Uptime Kuma
+    - Uptime Kuma:
+        icon: uptime-kuma.png
+        href: https://kuma.cinderblock.tech
+        description: "Service Monitor"
+        widget:
+            type: uptimekuma
+            url: http://kuma.cinderblock.tech
+            slug: homepage-status
+    # Minecraft
+    - Minecraft:
+        icon: minecraft.png
+        widget:
+            type: minecraft
+            url: udp://minecraft.cinderblock.tech    
+    # SpeedTest
+    - SpeedTest:
+        icon: speedtest-tracker.png
+        href: https://speedtest.cinderblock.tech
+        description: "Network Speed"
+        widget:
+            type: speedtest
+            url: https://speedtest.cinderblock.tech
+    
+    # TeslaMate
+    - TeslaMate:
+        icon: teslamate.png
+        href: https://teslamate.cinderblock.tech
+        description: Its Electric
+    
+    # Your_spotify
+    - Spotify Data:
+        icon: spotify.png
+        href: https://spotify.cinderblock.tech
+        description: Charts for Spotify

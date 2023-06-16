@@ -1,4 +1,14 @@
 # Create search bar at top of page
+- resources:
+    label: System
+    cpu: true
+    memory: true
+
+- resources:
+    label: Storage
+    disk: 
+        - /
+
 - search:
     provider: google # google, duckduckgo, bing, baidu or custom
     focus: true # Optional, will set focus to the search bar on page load
