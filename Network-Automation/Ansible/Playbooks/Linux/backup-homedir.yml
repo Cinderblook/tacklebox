@@ -6,8 +6,8 @@
 
   vars:
     backup_dir: "/home/austin/backups"
-    source_dir: "/home/austin/*"
-    dest_dir: "{{ backup_dir }}/{{ inventory_hostname }}-{{ ansible_date_time.iso8601_basic }}-backup"
+    source_dir: "/home/austin"
+    dest_dir: "{{ backup_dir }}/{{ inventory_hostname }}-{{ ansible_date_time.date }}-backup"
 
   tasks:
     - name: Create backup directory
@@ -15,11 +15,17 @@
         path: "{{ dest_dir }}"
         state: directory
 
+    - name: Get list of files in source_dir
+      find:
+        paths: "{{ source_dir }}"
+        recurse: yes
+      register: files_to_copy
+
     - name: Backup data
       copy:
-        src: "{{ item }}"
+        src: "{{ item.path }}"
         dest: "{{ dest_dir }}"
-      with_fileglob: "{{ source_dir }}"
+      loop: "{{ files_to_copy.files }}"
 
     - name: Verify backup
       stat:
