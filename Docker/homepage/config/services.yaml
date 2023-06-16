@@ -84,10 +84,9 @@
         href: https://pihole.cinderblock.tech/
         description: "DNS n Ads"
         widget:
-            type: pihole
-            url: http://pihole.cinderblock.tech
-            key: ${pihole-key}
-    
+          type: pihole
+          url: https://pihole.cinderblock.tech/
+          key: ${pihole-key}
     # Unifi
     - Unifi:
         icon: unifi.png
@@ -109,15 +108,13 @@
             url: http://traefik-internal.cinderblock.tech
             username: ${traefik-user}
             password: ${traefik-pass}
-    
     # Proxxmox
     - Proxmox:
         icon: proxmox.png
         href: https://proxmox.cinderblock.tech/
         description: "Hyper-viser"
         widget:
-            type: proxmox
-            url: http://proxmox.cinderblock.tech
-            username: ${PROXUSER}
-            password: ${PROXPASS}
-    
+          type: proxmox
+          url: https://proxmox.cinderblock.tech:8006
+          username: ${PROXUSER}
+          password: ${PROXPASS}

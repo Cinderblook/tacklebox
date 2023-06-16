@@ -1,0 +1,40 @@
+---
+- name: Backup volume data from pterodactyl-wing nodes
+  hosts: 'pterodactyl-wings'
+  gather_facts: true
+  become: true
+
+  vars:
+    backup_dir: "/home/austin/backups"
+    source_dir: "/home/austin/*"
+    dest_dir: "{{ backup_dir }}/{{ inventory_hostname }}-{{ ansible_date_time.iso8601_basic }}-backup"
+    pterodactyl_dirs:
+      - "/etc/pterodactyl"
+      - "/var/lib/pterodactyl"
+
+  tasks:
+    - name: Create backup directory
+      file:
+        path: "{{ dest_dir }}"
+        state: directory
+
+    - name: Backup data from /etc/pterodactyl
+      synchronize:
+        src: "{{ item }}"
+        dest: "{{ dest_dir }}/pterodactyl/etc/{{ item | basename }}"
+      with_items: "{{ pterodactyl_dirs }}"
+
+    - name: Backup data from /var/lib/pterodactyl
+      synchronize:
+        src: "{{ item }}"
+        dest: "{{ dest_dir }}/pterodactyl/var/{{ item | basename }}"
+      with_items: "{{ pterodactyl_dirs }}"
+
+    - name: Verify backup
+      stat:
+        path: "{{ dest_dir }}"
+      register: backup_stats
+
+    - name: Print backup status
+      debug:
+        msg: "Backup successful: {{ backup_stats.stat.exists }}"

@@ -1,0 +1,30 @@
+---
+- name: Backup home directory data from VMs
+  hosts: '*'
+  gather_facts: true
+  become: true
+
+  vars:
+    backup_dir: "/home/austin/backups"
+    source_dir: "/home/austin/*"
+    dest_dir: "{{ backup_dir }}/{{ inventory_hostname }}-{{ ansible_date_time.iso8601_basic }}-backup"
+
+  tasks:
+    - name: Create backup directory
+      file:
+        path: "{{ dest_dir }}"
+        state: directory
+
+    - name: Backup data
+      synchronize:
+        src: "{{ source_dir }}"
+        dest: "{{ dest_dir }}"
+
+    - name: Verify backup
+      stat:
+        path: "{{ dest_dir }}"
+      register: backup_stats
+
+    - name: Print backup status
+      debug:
+        msg: "Backup successful: {{ backup_stats.stat.exists }}"

@@ -1,39 +1,33 @@
 version: '3.3'
-
 services:
-    speedtest:
-        container_name: speedtest
-        image: henrywhitaker3/speedtest-tracker
+    speedtest-tracker:
+        container_name: speedtest-tracker
         ports:
-            - 8765:80
-        volumes:
-            - ./config:/config
+            - '9090:80'
+            - '9443:443'
         environment:
-            - TZ=
-            - PGID=
-            - PUID=
-            - OOKLA_EULA_GDPR=true
-        logging:
-            driver: "json-file"
-            options:
-                max-file: "10"
-                max-size: "200k"
-        networks: 
-            - proxy
+            - PUID=1000
+            - PGID=1000
+        volumes:
+            - './config:/config'
+            - './web:/etc/ssl/web'
+        image: 'ghcr.io/alexjustesen/speedtest-tracker:latest'
         restart: unless-stopped
+        networks:
+            - proxy
         labels:
-          - "traefik.enable=true"
-          - "traefik.http.routers.speedtest.entrypoints=http"
-          - "traefik.http.routers.speedtest.rule=Host(`speedtest.cinderblock.tech`)"
-          - "traefik.http.middlewares.speedtest-https-redirect.redirectscheme.scheme=https"
-          - "traefik.http.routers.speedtest.middlewares=speedtest-https-redirect"
-          - "traefik.http.routers.speedtest-secure.entrypoints=https"
-          - "traefik.http.routers.speedtest-secure.rule=Host(`speedtest.cinderblock.tech`)"
-          - "traefik.http.routers.speedtest-secure.tls=true"
-          - "traefik.http.routers.speedtest-secure.service=speedtest"
-          - "traefik.http.services.speedtest.loadbalancer.server.port=80"
-          - "traefik.docker.network=proxy"
+            - "traefik.enable=true"
+            - "traefik.http.routers.speedtest.entrypoints=http"
+            - "traefik.http.routers.speedtest.rule=Host(`speedtest.cinderblock.tech`)"
+            - "traefik.http.middlewares.speedtest-https-redirect.redirectscheme.scheme=https"
+            - "traefik.http.routers.speedtest.middlewares=speedtest-https-redirect"
+            - "traefik.http.routers.speedtest-secure.entrypoints=https"
+            - "traefik.http.routers.speedtest-secure.rule=Host(`speedtest.cinderblock.tech`)"
+            - "traefik.http.routers.speedtest-secure.tls=true"
+            - "traefik.http.routers.speedtest-secure.service=speedtest"
+            - "traefik.http.services.speedtest.loadbalancer.server.port=80"
+            - "traefik.docker.network=proxy"
 
 networks:
   proxy:
-    external: true          
+    external: true
