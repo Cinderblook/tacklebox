@@ -12,12 +12,7 @@
       - "/etc/pterodactyl"
       - "/var/lib/pterodactyl"
 
-  tasks:
-    - name: Install rsync
-      package:
-        name: rsync
-        state: present
-            
+  tasks:          
     - name: Create backup directory
       file:
         path: "{{ dest_dir }}"
@@ -28,14 +23,18 @@
         src: "{{ item }}"
         dest: "{{ dest_dir }}/pterodactyl/etc/{{ item | basename }}"
       with_items: "{{ pterodactyl_dirs }}"
-      vars:
-          ansible_env:
-            PATH: "/usr/bin:/usr/sbin:/sbin:/bin"
+
+    - name: Backup data from /var/lib/pterodactyl
+      copy:
+        src: "{{ item }}"
+        dest: "{{ dest_dir }}"
+      with_fileglob: "{{ source_dir }}"
+
     - name: Backup data from /var/lib/pterodactyl
       synchronize:
         src: "{{ item }}"
         dest: "{{ dest_dir }}/pterodactyl/var/{{ item | basename }}"
-      with_items: "{{ pterodactyl_dirs }}"
+      with_fileglob: "{{ pterodactyl_dirs }}"
 
     - name: Verify backup
       stat:
