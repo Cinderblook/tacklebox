@@ -7,7 +7,6 @@
 
   vars:
     primary_master: "{{ groups['k3s_nodes'][0] }}" 
-    k3s_token: ""  # Variable to store the K3s token
 
   tasks:
     - name: Install required packages

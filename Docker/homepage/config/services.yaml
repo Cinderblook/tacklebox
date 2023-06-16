@@ -5,83 +5,119 @@
         icon: kuma.png
         href: https://kuma.cinderblock.tech
         description: "Service Monitor"
+        widget:
+            type: uptimekuma
+            url: http://kuma.cinderblock.tech
+            slug: homepage-status
+    
     # Portainer
     - Portainer:
         icon: portainer.png
         href: https://portainer.cinderblock.tech
         description: "Container Management"
+        widget:
+            #type: portainer
+            #url: https://portainer.cinderblock.tech
+            #env: 1
+            #key:  ${portainer-token}
+
     # Pterodactyl
     - Pterodactyl:
         icon: pterodactyl.png
         href: https://pterodactyl.cinderblock.tech
         description: "Game Servers"
+        widget:
+            type: pterodactyl
+            url: http://pterodactyl.cinderblock.tech
+            key: ${pterodactyl-key}
+    
     # SpeedTest
     - SpeedTest:
-        icon: speed.png
+        icon: speed-test.png
         href: https://speedtest.cinderblock.tech
         description: "Network Speed"
         widget:
             type: speedtest
             url: https://speedtest.cinderblock.tech
+    
     # TeslaMate
     - TeslaMate:
         icon: teslamate.png
         href: https://teslamate.cinderblock.tech
         description: Its Electric
+    
     # Your_spotify
     - Spotify Data:
         icon: spotify.png
         href: https://spotify.cinderblock.tech
         description: Charts for Spotify
+    
     # Ansible Semaphora
     - Ansible Semaphora:
         icon: ansible.png
-        href: https://semaphora.cinderblock.tech
+        href: https://semaphore.cinderblock.tech
         description: Ansible 
+    
     # Rancher
     - Rancher:
         icon: rancher.png
         href: https://rancher.cinderblock.tech
         description: K3S-Management
+    
     # OpenVPN
     - OpenVPN:
         icon: openvpn.png
         href: https://vpn.cinderblock.tech
         description: VPN Solution
+    
+    # Minecraft
+    - Minecraft:
+        icon: minecaft.png
+        widget:
+            type: minecraft
+            url: udp://minecraft.cinderblock.tech
+
 - Core:
     # PiHole
     - Pihole:
-        icon: pihole.png
-        href: http://pihole.cinderblock.tech/
+        icon: pi-hole.png
+        href: https://pihole.cinderblock.tech/
         description: "DNS n Ads"
         widget:
-          type: pihole
-          url: http://pihole.cinderblock.tech/
+            type: pihole
+            url: http://pihole.cinderblock.tech
+            key: ${pihole-key}
+    
     # Unifi
     - Unifi:
         icon: unifi.png
         href: https://dreamrouter.cinderblock.tech
         description: "Network Infrastructure"
-        widget:
-          type: unifi
-          url: https://dreamrouter.cinderblock.tech
-          username: ${DreamUser}
-          password: ${DreamPass}
+        #widget:
+        #    type: unifi
+        #    url: https://dreamrouter.cinderblock.tech
+        #    username: ${DreamUser}
+        #    password: ${DreamPass}
+    
     # Traefik
     - Traefik:
         icon: traefik.png
         href: https://traefik-internal.cinderblock.tech/
         description: "Traffic Controller"
         widget:
-          type: traefik
-          url: http://traefik-internal.cinderblock.tech
+            type: traefik
+            url: http://traefik-internal.cinderblock.tech
+            username: ${traefik-user}
+            password: ${traefik-pass}
+    
     # Proxxmox
     - Proxmox:
         icon: proxmox.png
         href: https://proxmox.cinderblock.tech/
-        description: "Traffic Controller"
+        description: "Hyper-viser"
         widget:
-          type: proxmox
-          url: https://proxmox.cinderblock.tech:8006
-          username: ${PROXUSER}
-          password: ${PROXPASS}
+            type: proxmox
+            url: http://proxmox.cinderblock.tech
+            username: ${PROXUSER}
+            password: ${PROXPASS}
+    
