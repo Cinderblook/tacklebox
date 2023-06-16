@@ -25,7 +25,8 @@
         src: "{{ source_dir }}"
         dest: "{{ dest_dir }}"
       vars:
-        ansible_shell_executable: /usr/bin/rsync
+          ansible_env:
+            PATH: "/usr/bin:/usr/sbin:/sbin:/bin"
 
     - name: Verify backup
       stat:
