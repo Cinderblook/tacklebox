@@ -8,6 +8,7 @@
     backup_dir: "/backups"
     source_dir: "/home/austin"
     dest_dir: "{{ backup_dir }}/{{ inventory_hostname }}-{{ ansible_date_time.date }}-backup"
+    excluded_dir: "/home/austin/backups"
 
   tasks:
     - name: Create backup directory
@@ -18,7 +19,7 @@
 
     - name: Create archive of the source directory
       become: true
-      shell: "tar -czf /tmp/{{ inventory_hostname }}.tar.gz -C {{ source_dir }} ."
+      shell: "tar -czf /tmp/{{ inventory_hostname }}.tar.gz --exclude={{ excluded_dir }} -C {{ source_dir }} ."
 
     - name: Fetch the archive file
       become: false
