@@ -2,7 +2,9 @@ services:
   mysql:
     restart: unless-stopped
     container_name: semaphore-mysql
+    image: mysql:8.0
     ports:
+      - 3336:3306
     volumes:
       - ./data:/var/lib/mysql
     environment:
@@ -20,6 +22,7 @@ services:
     container_name: semaphore
     volumes:
       - ./logs:/tmp/logs
+      - ../backups:/backups
     environment:
       SEMAPHORE_DB_USER: ${MYSQL_USER}
       SEMAPHORE_DB_PASS: ${MYSQL_PASS}
@@ -61,6 +64,3 @@ services:
 networks:
   proxy:
     external: true
-
-volumes:
-  semaphore-mysql: 
