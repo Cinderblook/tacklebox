@@ -21,10 +21,10 @@
       become: true
       #shell: "tar -czf /tmp/{{ inventory_hostname }}.tar.gz --exclude={{ excluded_dir }} -C {{ source_dir }} ."
       # Using this to push through an error with a live file from a Rancher Container. (Snap file)
-      #shell: "tar --warning=no-file-changed -czf /tmp/{{ inventory_hostname }}.tar.gz --exclude={{ excluded_dir }} -C {{ source_dir }} ."
-      shell: 
-        cmd: "tar --warning=no-file-changed -cvzf /tmp/{{ inventory_hostname }}.tar.gz --exclude={{ excluded_dir }} -C {{ source_dir }} ."
-        executable: /bin/bash    
+      shell: "tar --warning=no-file-changed -czf /tmp/{{ inventory_hostname }}.tar.gz --exclude={{ excluded_dir }} -C {{ source_dir }} ."
+      #shell: 
+      #  cmd: "tar --warning=no-file-changed -cvzf /tmp/{{ inventory_hostname }}.tar.gz --exclude={{ excluded_dir }} -C {{ source_dir }} ."
+      #  executable: /bin/bash    
 
     - name: Fetch the archive file
       become: false
