@@ -6,7 +6,7 @@
 
   vars:
     backup_dir: "//backups"
-    dest_dir: "{{ backup_dir }}/{{ inventory_hostname }}-{{ ansible_date_time.date }}-backup"
+    dest_dir: "{{ backup_dir }}/{{ inventory_hostname }}-{{ ansible_date_time.date }}-backup-pterodactyl"
     pterodactyl_dirs:
       - "/etc/pterodactyl"
       - "/var/lib/pterodactyl"

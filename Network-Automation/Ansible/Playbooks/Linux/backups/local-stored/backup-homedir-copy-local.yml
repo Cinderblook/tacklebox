@@ -2,7 +2,7 @@
 - name: Backup home directory data from VMs
   hosts: '*'
   gather_facts: true
-  become: true
+  become: false
 
   vars:
     backup_dir: "/backups"
@@ -16,19 +16,16 @@
         state: directory
       delegate_to: localhost
 
-    - name: Get list of files in source_dir
-      find:
-        paths: "{{ source_dir }}"
-        recurse: yes
-        excludes: "backups"
-      register: files_to_copy
+    - name: Create archive of the source directory
+      become: true
+      shell: "tar -czf /tmp/{{ inventory_hostname }}.tar.gz -C {{ source_dir }} ."
 
-    - name: Backup data
+    - name: Fetch the archive file
+      become: false
       fetch:
-        src: "{{ item.path }}"
+        src: "/tmp/{{ inventory_hostname }}.tar.gz"
         dest: "{{ dest_dir }}"
         flat: yes
-      loop: "{{ files_to_copy.files }}"
 
     - name: Verify backup
       stat:

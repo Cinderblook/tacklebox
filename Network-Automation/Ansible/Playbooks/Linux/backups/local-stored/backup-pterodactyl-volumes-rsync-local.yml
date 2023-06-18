@@ -2,7 +2,7 @@
 - name: Backup volume data from pterodactyl-wing nodes
   hosts: 'pterodactyl-wings'
   gather_facts: true
-  become: true
+  become: false
 
   vars:
     backup_dir: "/backups"

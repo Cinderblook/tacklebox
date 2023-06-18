@@ -28,7 +28,9 @@ Distinct layout of what is throughout this repository. Some notable projects are
 *Proxmox:*
 * [deploy-vm](https://github.com/Cinderblook/tacklebox/tree/main/Terraform/Proxmox/deploy-vm) & [deploy-multi-vm](https://github.com/Cinderblook/tacklebox/tree/main/Terraform/Proxmox/deploy-multi-vm): Creating Virtual Machines in Proxmox from a template
 ## [**Network-Automation**](https://github.com/Cinderblook/tacklebox/tree/main/Network-Automation) <img src="https://www.python.org/static/favicon.ico" alt="Network" width="40"> <img src="https://www.ansible.com/hs-fs/hub/330046/file-448313641.png" alt="Packer" width="40"> <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/PowerShell_Core_6.0_icon.png/64px-PowerShell_Core_6.0_icon.png" alt="Network" width="40"> <br>
-* Powershell, Ansible, Python
+* [Powershell](https://github.com/Cinderblook/tacklebox/tree/main/Network-Automation/Powershell)
+* [Ansible](https://github.com/Cinderblook/tacklebox/tree/main/Network-Automation/Ansible)
+* [Python](https://github.com/Cinderblook/tacklebox/tree/main/Network-Automation/Python)
     - In the process of migrating various scripts I have into this. Gradually updating.
 
 ## [**Kubernetes**](https://github.com/Cinderblook/tacklebox/tree/main/Kubernetes) <img src="https://kubernetes.io/images/favicon.png" alt="Kubernetes" width="40"> 
