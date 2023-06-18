@@ -14,6 +14,7 @@
       file:
         path: "{{ dest_dir }}"
         state: directory
+      delegate_to: localhost
 
     - name: Get list of files in source_dir
       find:
@@ -23,16 +24,19 @@
       register: files_to_copy
 
     - name: Backup data
-      copy:
+      fetch:
         src: "{{ item.path }}"
         dest: "{{ dest_dir }}"
+        flat: yes
       loop: "{{ files_to_copy.files }}"
 
     - name: Verify backup
       stat:
         path: "{{ dest_dir }}"
       register: backup_stats
+      delegate_to: localhost
 
     - name: Print backup status
       debug:
         msg: "Backup successful: {{ backup_stats.stat.exists }}"
+      delegate_to: localhost
