@@ -27,7 +27,7 @@
     - name: Fetch the archive files
       fetch:
         src: "/tmp/{{ item | basename }}.tar.gz"
-        dest: "{{ dest_dir }}"
+        dest: "{{ dest_dir }}/"
         flat: yes
       loop: "{{ pterodactyl_dirs }}"
 
