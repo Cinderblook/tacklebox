@@ -8,24 +8,21 @@
     backup_dir: "/home/austin/backups"
     source_dir: "/home/austin"
     dest_dir: "{{ backup_dir }}/{{ inventory_hostname }}-{{ ansible_date_time.date }}-backup"
+    rsync_excludes: "backups"
 
   tasks:
+    - name: Ensure rsync is installed
+      apt:
+        name: rsync
+        state: present
+
     - name: Create backup directory
       file:
         path: "{{ dest_dir }}"
         state: directory
 
-    - name: Get list of files in source_dir
-      find:
-        paths: "{{ source_dir }}"
-        recurse: yes
-      register: files_to_copy
-
     - name: Backup data
-      copy:
-        src: "{{ item.path }}"
-        dest: "{{ dest_dir }}"
-      loop: "{{ files_to_copy.files }}"
+      shell: "rsync -az --exclude={{ rsync_excludes }} {{ source_dir }}/ {{ dest_dir }}/."
 
     - name: Verify backup
       stat:

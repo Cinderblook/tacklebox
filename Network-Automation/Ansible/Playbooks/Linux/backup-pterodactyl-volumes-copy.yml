@@ -7,7 +7,7 @@
   vars:
     backup_dir: "/home/austin/backups"
     source_dir: "/home/austin/*"
-    dest_dir: "{{ backup_dir }}/{{ inventory_hostname }}-{{ ansible_date_time.iso8601_basic }}-backup"
+    dest_dir: "{{ backup_dir }}/{{ inventory_hostname }}-{{ ansible_date_time.date }}-backup"
     pterodactyl_dirs:
       - "/etc/pterodactyl"
       - "/var/lib/pterodactyl"
@@ -19,10 +19,10 @@
         state: directory
 
     - name: Backup data from /etc/pterodactyl
-      synchronize:
+      copy:
         src: "{{ item }}"
         dest: "{{ dest_dir }}/pterodactyl/etc/{{ item | basename }}"
-      with_items: "{{ pterodactyl_dirs }}"
+      loop: "{{ pterodactyl_dirs }}"
 
     - name: Backup data from /var/lib/pterodactyl
       copy:
@@ -31,10 +31,10 @@
       with_fileglob: "{{ source_dir }}"
 
     - name: Backup data from /var/lib/pterodactyl
-      synchronize:
+      copy:
         src: "{{ item }}"
         dest: "{{ dest_dir }}/pterodactyl/var/{{ item | basename }}"
-      with_fileglob: "{{ pterodactyl_dirs }}"
+      loop: "{{ pterodactyl_dirs }}"
 
     - name: Verify backup
       stat:
