@@ -20,14 +20,11 @@
 
     - name: Archive pterodactyl directories
       become: true
-      archive:
-        path: "{{ item }}"
-        dest: "/tmp/{{ item | basename }}.tar.gz"
+      shell: "tar -czf /tmp/{{ item | basename }}.tar.gz -C {{ item }} ."
       loop: "{{ pterodactyl_dirs }}"
       
 
     - name: Fetch the archive files
-      delegate_to: localhost
       fetch:
         src: "/tmp/{{ item | basename }}.tar.gz"
         dest: "{{ dest_dir }}"
