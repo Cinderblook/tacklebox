@@ -2,36 +2,42 @@
 - name: Backup volume data from pterodactyl-wing nodes
   hosts: 'pterodactyl-wings'
   gather_facts: true
-  #become: true
+  become: true
 
   vars:
-    backup_dir: "/backups"
+    backup_dir: "/home/austin/backups"
     dest_dir: "{{ backup_dir }}/{{ inventory_hostname }}-{{ ansible_date_time.date }}-backup"
     pterodactyl_dirs:
       - "/etc/pterodactyl"
       - "/var/lib/pterodactyl"
 
-  tasks:
+  tasks:          
     - name: Create backup directory
+      delegate_to: localhost
       file:
         path: "{{ dest_dir }}"
         state: directory
-      delegate_to: localhost
 
-    - name: Backup data from pterodactyl node
+    - name: Archive pterodactyl directories
+      archive:
+        path: "{{ item }}"
+        dest: "/tmp/{{ item | basename }}.tar.gz"
+      loop: "{{ pterodactyl_dirs }}"
+
+    - name: Fetch the archive files
+      delegate_to: localhost
       fetch:
-        src: "{{ item }}"
-        dest: "{{ dest_dir }}/{{ item | basename }}"
+        src: "/tmp/{{ item | basename }}.tar.gz"
+        dest: "{{ dest_dir }}"
         flat: yes
       loop: "{{ pterodactyl_dirs }}"
 
     - name: Verify backup
+      delegate_to: localhost
       stat:
         path: "{{ dest_dir }}"
       register: backup_stats
-      delegate_to: localhost
 
     - name: Print backup status
       debug:
         msg: "Backup successful: {{ backup_stats.stat.exists }}"
-      delegate_to: localhost
