@@ -5,7 +5,7 @@
   become: true
 
   vars:
-    backup_dir: "/home/austin/backups"
+    backup_dir: "/backups"
     source_dir: "/home/austin"
     dest_dir: "{{ backup_dir }}/{{ inventory_hostname }}-{{ ansible_date_time.date }}-backup"
 

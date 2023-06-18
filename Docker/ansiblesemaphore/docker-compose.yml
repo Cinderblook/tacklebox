@@ -26,7 +26,7 @@ services:
     environment:
       SEMAPHORE_DB_USER: ${MYSQL_USER}
       SEMAPHORE_DB_PASS: ${MYSQL_PASS}
-      SEMAPHORE_DB_HOST: mysql-semaphore
+      SEMAPHORE_DB_HOST: semaphore-mysql
       SEMAPHORE_DB_PORT: 3306 
       SEMAPHORE_DB_DIALECT: mysql
       SEMAPHORE_DB: semaphore

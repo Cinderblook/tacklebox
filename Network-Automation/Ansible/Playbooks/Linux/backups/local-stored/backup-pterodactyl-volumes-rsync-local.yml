@@ -1,0 +1,41 @@
+---
+- name: Backup volume data from pterodactyl-wing nodes
+  hosts: 'pterodactyl-wings'
+  gather_facts: true
+  become: true
+
+  vars:
+    backup_dir: "/backups"
+    dest_dir: "{{ backup_dir }}/{{ inventory_hostname }}-{{ ansible_date_time.date }}-backup"
+    pterodactyl_dirs:
+      - "/etc/pterodactyl"
+      - "/var/lib/pterodactyl"
+
+  tasks:
+    - name: Ensure rsync is installed
+      apt:
+        name: rsync
+        state: present
+      delegate_to: localhost # run this on Ansible controller
+
+    - name: Create backup directory
+      file:
+        path: "{{ dest_dir }}"
+        state: directory
+      delegate_to: localhost # run this on Ansible controller
+
+    - name: Backup data from pterodactyl directories
+      shell: "rsync -az {{ ansible_user }}@{{ inventory_hostname }}:{{ item }} {{ dest_dir }}"
+      with_items: "{{ pterodactyl_dirs }}"
+      delegate_to: localhost # run this on Ansible controller
+
+    - name: Verify backup
+      stat:
+        path: "{{ dest_dir }}"
+      register: backup_stats
+      delegate_to: localhost # run this on Ansible controller
+
+    - name: Print backup status
+      debug:
+        msg: "Backup successful: {{ backup_stats.stat.exists }}"
+      delegate_to: localhost # run this on Ansible controller

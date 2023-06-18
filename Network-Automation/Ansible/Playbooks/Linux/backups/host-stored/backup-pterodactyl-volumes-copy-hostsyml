@@ -5,8 +5,7 @@
   become: true
 
   vars:
-    backup_dir: "/home/austin/backups"
-    source_dir: "/home/austin/*"
+    backup_dir: "/backups"
     dest_dir: "{{ backup_dir }}/{{ inventory_hostname }}-{{ ansible_date_time.date }}-backup"
     pterodactyl_dirs:
       - "/etc/pterodactyl"
@@ -18,17 +17,12 @@
         path: "{{ dest_dir }}"
         state: directory
 
-    - name: Backup data from /etc/pterodactyl
+    - name: Backup data from pterodactyl node
       copy:
         src: "{{ item }}"
-        dest: "{{ dest_dir }}/pterodactyl/etc/{{ item | basename }}"
+        dest: "{{ dest_dir }}/{{ item | basename }}"
       loop: "{{ pterodactyl_dirs }}"
 
-    - name: Backup data from /var/lib/pterodactyl
-      copy:
-        src: "{{ item }}"
-        dest: "{{ dest_dir }}"
-      with_fileglob: "{{ source_dir }}"
 
     - name: Backup data from /var/lib/pterodactyl
       copy:
