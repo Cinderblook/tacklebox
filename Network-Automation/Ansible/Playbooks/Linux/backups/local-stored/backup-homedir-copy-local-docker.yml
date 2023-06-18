@@ -8,7 +8,9 @@
     backup_dir: "/backups"
     source_dir: "/home/austin"
     dest_dir: "{{ backup_dir }}/{{ inventory_hostname }}-{{ ansible_date_time.date }}-backup"
-    excluded_dir: "/home/austin/backups"
+    excluded_dirs: 
+      - "/home/austin/backups"
+      - "/home/austin/ansiblesemaphore"
 
   tasks:
     - name: Stop Docker containers
@@ -32,10 +34,13 @@
         state: directory
       delegate_to: localhost
 
+    - name: Create tar command with exclusions
+      set_fact:
+        tar_command: "tar --warning=no-file-changed -czf /tmp/{{ inventory_hostname }}.tar.gz {% for dir in excluded_dirs %} --exclude={{ dir }} {% endfor %} -C {{ source_dir }} ."
+
     - name: Create archive of the source directory
       become: true
-      shell: "tar --warning=no-file-changed -czf /tmp/{{ inventory_hostname }}.tar.gz --exclude={{ excluded_dir }} -C {{ source_dir }} ."
-
+      shell: "{{ tar_command }}"
 
     - name: Fetch the archive file
       become: false
