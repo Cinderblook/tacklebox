@@ -23,7 +23,7 @@
         state: directory
 
     - name: Backup data from pterodactyl directories
-      shell: "rsync -az {{ item }} {{ dest_dir }}/pterodactyl/{{ item | regex_replace('^/', '') }}"
+      shell: "rsync -az {{ item }} {{ dest_dir }}"
       with_items: "{{ pterodactyl_dirs }}"
 
     - name: Verify backup
