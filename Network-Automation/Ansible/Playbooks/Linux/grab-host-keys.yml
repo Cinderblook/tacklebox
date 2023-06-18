@@ -1,0 +1,17 @@
+---
+- name: Fetch public host keys
+  hosts: '*'
+  gather_facts: false
+  tasks:
+    - name: Fetch public host key
+      command: ssh-keyscan -T 10 {{ inventory_hostname }}
+      register: ssh_keyscan_output
+      changed_when: false
+      failed_when: false
+
+    - name: Save public host key
+      lineinfile:
+        line: "{{ ssh_keyscan_output.stdout }}"
+        path: "/home/austin/keys/hosts-keys.txt"
+        create: true
+      delegate_to: localhost
