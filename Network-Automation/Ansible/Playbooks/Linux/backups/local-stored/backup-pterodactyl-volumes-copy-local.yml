@@ -2,6 +2,7 @@
 - name: Backup volume data from pterodactyl-wing nodes
   hosts: 'pterodactyl-wings'
   gather_facts: true
+  become: false
 
   vars:
     backup_dir: "//backups"
@@ -18,8 +19,8 @@
         state: directory
 
     - name: Archive pterodactyl directories
+      become: true
       archive:
-        beomce: true
         path: "{{ item }}"
         dest: "/tmp/{{ item | basename }}.tar.gz"
       loop: "{{ pterodactyl_dirs }}"
