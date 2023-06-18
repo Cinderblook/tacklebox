@@ -1,0 +1,72 @@
+---
+- name: Backup home directory data from VMs
+  hosts: 'docker-hub'
+  gather_facts: true
+  become: false
+
+  vars:
+    backup_dir: "/backups"
+    source_dir: "/home/austin"
+    dest_dir: "{{ backup_dir }}/{{ inventory_hostname }}-{{ ansible_date_time.date }}-backup"
+    excluded_dir: "/home/austin/backups"
+
+  tasks:
+    - name: Stop Docker containers
+      docker_container:
+        name: "{{ item }}"
+        state: stopped
+      loop:
+        - "rancher_rancher_1"
+        - "your_spotify_backend"
+        - "your_spotify_web"
+        - "your_spotify_mongo"
+        - "teslamate_teslamate_1"
+        - "teslamate_mosquitto_1"
+        - "teslamate_database_1"
+        - "teslamate_grafana_1"
+        - "speedtest-tracker"
+
+    - name: Create backup directory
+      file:
+        path: "{{ dest_dir }}"
+        state: directory
+      delegate_to: localhost
+
+    - name: Create archive of the source directory
+      become: true
+      shell: "tar --warning=no-file-changed -czf /tmp/{{ inventory_hostname }}.tar.gz --exclude={{ excluded_dir }} -C {{ source_dir }} ."
+
+
+    - name: Fetch the archive file
+      become: false
+      fetch:
+        src: "/tmp/{{ inventory_hostname }}.tar.gz"
+        dest: "{{ dest_dir }}/"
+        flat: yes
+    
+    # Start containers back up to allow for TAR to execute correctly. Databases are interrupting the creation.
+    - name: Start Docker containers
+      docker_container:
+        name: "{{ item }}"
+        state: started
+      loop:
+        - "rancher_rancher_1"
+        - "your_spotify_backend"
+        - "your_spotify_web"
+        - "your_spotify_mongo"
+        - "teslamate_teslamate_1"
+        - "teslamate_mosquitto_1"
+        - "teslamate_database_1"
+        - "teslamate_grafana_1"
+        - "speedtest-tracker"
+
+    - name: Verify backup
+      stat:
+        path: "{{ dest_dir }}"
+      register: backup_stats
+      delegate_to: localhost
+
+    - name: Print backup status
+      debug:
+        msg: "Backup successful: {{ backup_stats.stat.exists }}"
+      delegate_to: localhost
