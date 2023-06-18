@@ -19,10 +19,11 @@
 
     - name: Archive pterodactyl directories
       archive:
+        beomce: true
         path: "{{ item }}"
         dest: "/tmp/{{ item | basename }}.tar.gz"
       loop: "{{ pterodactyl_dirs }}"
-      beomce: true
+      
 
     - name: Fetch the archive files
       delegate_to: localhost
