@@ -1,16 +1,35 @@
 ---
 - hosts: "*"
+  become: yes
   tasks:
-    - name: Install docker
-      apt:
-        name: docker
-        state: latest
-        update_cache: true  
+    - name: Update repositories and install prerequisites
       become: true
-    - name: Install docker-compose
       apt:
-        name: docker-compose
+        pkg:
+          - ca-certificates
+          - curl
+          - gnupg
         state: latest
         update_cache: true
+
+    - name: Add Docker GPG apt Key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Add Docker Repository
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu {{ansible_distribution_release}} stable
+        state: present
+
+    - name: Update apt and install docker packages
       become: true
-        
+      apt:
+        pkg:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+          - docker-buildx-plugin
+          - docker-compose-plugin
+        state: latest
+        update_cache: true
