@@ -26,6 +26,7 @@
       become: true
 
     - name: Rsync source directory to temp directory excluding specified directories
+      become: true
       synchronize:
         src: "{{ source_dir }}/"
         dest: "{{ tmp_dir }}"
