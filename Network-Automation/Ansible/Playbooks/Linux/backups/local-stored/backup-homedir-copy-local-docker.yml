@@ -27,13 +27,9 @@
 
     - name: Rsync source directory to temp directory excluding specified directories
       become: true
-      synchronize:
-        src: "{{ source_dir }}/"
-        dest: "{{ tmp_dir }}"
-        rsync_path: /usr/bin/rsync
-        delete: yes
-        rsync_opts:
-          - "--exclude=backups/"
+      command:
+        cmd: "rsync -av --exclude=backups/ {{ source_dir }}/ {{ tmp_dir }}"
+
 
     - name: Create tar command with exclusions
       set_fact:
