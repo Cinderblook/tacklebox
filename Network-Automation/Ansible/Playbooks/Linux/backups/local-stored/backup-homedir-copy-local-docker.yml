@@ -27,6 +27,8 @@
         - "teslamate_database_1"
         - "teslamate_grafana_1"
         - "speedtest-tracker"
+        - "portainer"
+        - "uptime-kuma"
 
     - name: Create backup directory
       file:
@@ -64,6 +66,8 @@
         - "teslamate_database_1"
         - "teslamate_grafana_1"
         - "speedtest-tracker"
+        - "portainer"
+        - "uptime-kuma"
 
     - name: Verify backup
       stat:
