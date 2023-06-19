@@ -57,4 +57,4 @@
       debug:
         msg: "Backup successful: {{ backup_stats.stat.exists }}"
       delegate_to: localhost
----
+
