@@ -20,7 +20,7 @@
       delegate_to: localhost
 
     - name: Ensure rsync is installed
-      yum:
+      apt:
         name: rsync
         state: present
       become: true
