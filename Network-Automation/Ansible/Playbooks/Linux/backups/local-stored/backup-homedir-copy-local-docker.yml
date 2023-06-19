@@ -1,6 +1,6 @@
 ---
 - name: Backup home directory data from VMs
-  hosts: 'docker-hub'
+  hosts: '*'
   gather_facts: true
   become: false
 
@@ -8,41 +8,37 @@
     backup_dir: "/backups"
     source_dir: "/home/austin"
     dest_dir: "{{ backup_dir }}/{{ inventory_hostname }}-{{ ansible_date_time.date }}-backup"
+    tmp_dir: "/tmp/backup"
     excluded_dirs: 
       - "/home/austin/backups"
-      - "/home/austin/ansiblesemaphore"
 
   tasks:
-    - name: Stop Docker containers
-      docker_container:
-        name: "{{ item }}"
-        state: stopped
-      loop:
-        - "rancher_rancher_1"
-        - "your_spotify_backend"
-        - "your_spotify_web"
-        - "your_spotify_mongo"
-        - "teslamate_teslamate_1"
-        - "teslamate_mosquitto_1"
-        - "teslamate_database_1"
-        - "teslamate_grafana_1"
-        - "speedtest-tracker"
-        - "portainer"
-        - "uptime-kuma"
-
     - name: Create backup directory
       file:
         path: "{{ dest_dir }}"
         state: directory
       delegate_to: localhost
 
+    - name: Rsync source directory to temp directory excluding specified directories
+      synchronize:
+        src: "{{ source_dir }}/"
+        dest: "{{ tmp_dir }}"
+        delete: yes
+        rsync_opts:
+          - "--exclude=backups/"
+
     - name: Create tar command with exclusions
       set_fact:
-        tar_command: "tar --warning=no-file-changed -czf /tmp/{{ inventory_hostname }}.tar.gz {% for dir in excluded_dirs %} --exclude={{ dir }} {% endfor %} -C {{ source_dir }} ."
+        tar_command: "tar --warning=no-file-changed -czf /tmp/{{ inventory_hostname }}.tar.gz -C {{ tmp_dir }} ."
 
-    - name: Create archive of the source directory
+    - name: Create archive of the source directory from temp directory
       become: true
       shell: "{{ tar_command }}"
+
+    - name: Remove temporary directory
+      file:
+        path: "{{ tmp_dir }}"
+        state: absent
 
     - name: Fetch the archive file
       become: false
@@ -50,24 +46,6 @@
         src: "/tmp/{{ inventory_hostname }}.tar.gz"
         dest: "{{ dest_dir }}/"
         flat: yes
-    
-    # Start containers back up to allow for TAR to execute correctly. Databases are interrupting the creation.
-    - name: Start Docker containers
-      docker_container:
-        name: "{{ item }}"
-        state: started
-      loop:
-        - "rancher_rancher_1"
-        - "your_spotify_backend"
-        - "your_spotify_web"
-        - "your_spotify_mongo"
-        - "teslamate_teslamate_1"
-        - "teslamate_mosquitto_1"
-        - "teslamate_database_1"
-        - "teslamate_grafana_1"
-        - "speedtest-tracker"
-        - "portainer"
-        - "uptime-kuma"
 
     - name: Verify backup
       stat:
@@ -79,3 +57,4 @@
       debug:
         msg: "Backup successful: {{ backup_stats.stat.exists }}"
       delegate_to: localhost
+---
