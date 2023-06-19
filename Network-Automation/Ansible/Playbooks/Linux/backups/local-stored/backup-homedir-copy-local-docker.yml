@@ -40,6 +40,7 @@
       shell: "{{ tar_command }}"
 
     - name: Remove temporary directory
+      become: true
       file:
         path: "{{ tmp_dir }}"
         state: absent
