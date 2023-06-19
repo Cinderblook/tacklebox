@@ -19,10 +19,17 @@
         state: directory
       delegate_to: localhost
 
+    - name: Ensure rsync is installed
+      yum:
+        name: rsync
+        state: present
+      become: true
+
     - name: Rsync source directory to temp directory excluding specified directories
       synchronize:
         src: "{{ source_dir }}/"
         dest: "{{ tmp_dir }}"
+        rsync_path: /bin/rsync
         delete: yes
         rsync_opts:
           - "--exclude=backups/"
