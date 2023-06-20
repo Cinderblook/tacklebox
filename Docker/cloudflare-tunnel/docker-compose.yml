@@ -1,0 +1,19 @@
+version: '3.9'
+
+services:
+  cloudflare-tunnel:
+    dns:
+      - 192.168.1.253
+      - 1.1.1.1
+    container_name: cloudflare-tunnel
+    image: cloudflare/cloudflared:latest
+    restart: unless-stopped
+    environment:
+      - TUNNEL_TOKEN=${TUNNEL_TOKEN}
+    command: tunnel --no-autoupdate run
+    networks:
+      - proxy
+
+networks:
+  proxy:
+    external: true
