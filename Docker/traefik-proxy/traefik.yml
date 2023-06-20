@@ -1,24 +1,28 @@
 api:
   dashboard: true
   debug: true
+
 entryPoints:
   http:
     address: ":80"
     http:
       redirections:
         entryPoint:
-          to: https
-          scheme: https
+          to: "https"
+          scheme: "https"
   https:
     address: ":443"
-  sftp:
-    address: ":2022/tcp"
-  wings-service:
-    address: ":8080/tcp"
-  wings-minecraft:
-    address: ":28000/tcp"
-  k3s:
-    address: ":6443"    
+    http:
+      middlewares:
+        - "crowdsec-bouncer@file"
+  #sftp:
+  #  address: ":2022/tcp"
+  #wings-service:
+  #  address: ":8080/tcp"
+  #wings-minecraft:
+  #  address: ":28000/tcp"
+  #k3s:
+  #  address: ":6443"    
 serversTransport:
   insecureSkipVerify: true
 providers:

@@ -51,27 +51,6 @@
           type: pihole
           url: https://pihole.cinderblock.tech/
           key: ${pihole-key}
-    # Unifi
-    - Unifi:
-        icon: unifi.png
-        href: https://dreamrouter.cinderblock.tech
-        description: "Network Infrastructure"
-        #widget:
-        #    type: unifi
-        #    url: https://dreamrouter.cinderblock.tech
-        #    username: ${DreamUser}
-        #    password: ${DreamPass}
-    
-    # Traefik
-    - Traefik:
-        icon: traefik.png
-        href: https://traefik-internal.cinderblock.tech/
-        description: "Traffic Controller"
-        widget:
-            type: traefik
-            url: http://traefik-internal.cinderblock.tech
-            username: ${traefik-user}
-            password: ${traefik-pass}
     # Proxxmox
     - Proxmox:
         icon: proxmox.png
@@ -82,6 +61,32 @@
           url: https://proxmox.cinderblock.tech:8006
           username: ${PROXUSER}
           password: ${PROXPASS}
+    # Traefik
+    - Traefik:
+        icon: traefik.png
+        href: https://traefik-internal.cinderblock.tech/
+        description: "Traffic Controller"
+        widget:
+            type: traefik
+            url: http://traefik-internal.cinderblock.tech
+            username: ${traefik-user}
+            password: ${traefik-pass}
+    # Unifi
+    - Unifi:
+        icon: unifi.png
+        href: https://dreamrouter.cinderblock.tech
+        description: "Network Infrastructure"
+        #widget:
+        #    type: unifi
+        #    url: https://dreamrouter.cinderblock.tech
+        #    username: ${DreamUser}
+        #    password: ${DreamPass}
+    # Crowdsec
+    - Crowdsec:
+        icon: crowdsec.png 
+        href: https://app.crowdsec.net/security-engines
+        description: "Lama Security"
+
 - Data:
     # Uptime Kuma
     - Uptime Kuma:

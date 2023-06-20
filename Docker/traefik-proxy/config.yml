@@ -8,7 +8,6 @@ http:
       rule: "Host(`proxmox.cinderblock.tech`)"
       middlewares:
         - default-headers
-        - https-redirectscheme
       tls: {}
       service: proxmox
 # Pihole http
@@ -166,6 +165,11 @@ http:
     addprefix-admin:
       addPrefix:
         prefix: "/admin"
+# for CrowdSec redirects - File Logging
+    crowdsec-bouncer:
+      forwardauth:
+        address: http://bouncer-traefik:8080/api/v1/forwardAuth
+        trustForwardHeader: true
 # Redirect all http traffic to https
     https-redirectscheme:
       redirectScheme:
@@ -212,70 +216,70 @@ http:
 tcp:
   routers:
 # Pterodactyl SFTP
-    pterodactyl_panel-sftp:
-      entryPoints: sftp
-      rule: "HostSNI(`pterodactyl.cinderblock.tech`)"
-      service: pterodactyl_panel-sftp
-      middlewares: default-whitelist
-      tls: {}
+#    pterodactyl_panel-sftp:
+#      entryPoints: sftp
+#      rule: "HostSNI(`pterodactyl.cinderblock.tech`)"
+#      service: pterodactyl_panel-sftp
+#      middlewares: default-whitelist
+#      tls: {}
 # Pterodactyl_Wings SFTP 
-    pterodactyl_wings-node01-sftp:
-      entryPoints: sftp
-      rule: "HostSNI(`gamenode-01.cinderblock.tech`)"
-      service: pterodactyl_wings-node01-sftp
-      middlewares: default-whitelist
-      tls: {}
+#    pterodactyl_wings-node01-sftp:
+#      entryPoints: sftp
+#      rule: "HostSNI(`gamenode-01.cinderblock.tech`)"
+#      service: pterodactyl_wings-node01-sftp
+#      middlewares: default-whitelist
+#      tls: {}
 # Pterodactyl_Wings port
-    pterodactyl_wings-node01:
-      entryPoints: wings-service
-      rule: "HostSNI(`gamenode-01.cinderblock.tech`)"
-      service: pterodactyl_wings-node01
-      middlewares: default-whitelist
-      tls: {}
+#    pterodactyl_wings-node01:
+#      entryPoints: wings-service
+#      rule: "HostSNI(`gamenode-01.cinderblock.tech`)"
+#      service: pterodactyl_wings-node01
+#      middlewares: default-whitelist
+#      tls: {}
 # Pterodactyl_Wings-Minecraft
-    pterodactyl_wings-minecraft:
-      entryPoints: wings-minecraft
-      rule: "HostSNI(`gamenode-01.cinderblock.tech`)"
-      service: pterodactyl_wings-minecraft
-      middlewares: default-whitelist
-      tls: {}
+#    pterodactyl_wings-minecraft:
+#      entryPoints: wings-minecraft
+#      rule: "HostSNI(`gamenode-01.cinderblock.tech`)"
+#      service: pterodactyl_wings-minecraft
+#      middlewares: default-whitelist
+#      tls: {}
 # k3s port    
-    k3s:
-      entryPoints:
-        - k3s
-      rule: "HostSNI(`k3s.cinderblock.tech`)"
-      service: k3s
-      middlewares: default-whitelist
-      tls: 
-        passthrough: true
+#    k3s:
+#      entryPoints:
+#        - k3s
+#      rule: "HostSNI(`k3s.cinderblock.tech`)"
+#      service: k3s
+#      middlewares: default-whitelist
+#      tls: 
+#        passthrough: true
 # Load balancers - Services
-  services:
+#  services:
 # Pterodactyl SFTP
-    pterodactyl_panel-sftp:
-      loadBalancer:
-        servers:
-          - address: "192.168.1.240:2022"
+#    pterodactyl_panel-sftp:
+#      loadBalancer:
+#        servers:
+#          - address: "192.168.1.240:2022"
 # Pterodactyl_Wings SFTP 
-    pterodactyl_wings-node01-sftp:
-      loadBalancer:
-        servers:
-          - address: "192.168.1.240:2022"
+#    pterodactyl_wings-node01-sftp:
+#      loadBalancer:
+#        servers:
+#          - address: "192.168.1.240:2022"
 # Pterodactyl_Wings port
-    pterodactyl_wings-node01:
-      loadBalancer:
-        servers:
-          - address: "192.168.1.240:8080"
+#    pterodactyl_wings-node01:
+#      loadBalancer:
+#        servers:
+#          - address: "192.168.1.240:8080"
 # Pterodactyl_Wings-Minecraft
-    pterodactyl_wings-minecraft:
-      loadBalancer:
-        servers:
-          - address: "192.168.1.240:28000"
+#    pterodactyl_wings-minecraft:
+#      loadBalancer:
+#        servers:
+#          - address: "192.168.1.240:28000"
 # k3s loadbalancer
-    k3s:
-      loadBalancer:
-        servers:
-        - address: "192.168.1.235:6443"
-        #- address: "192.168.1.236:6443"
+#    k3s:
+#      loadBalancer:
+#        servers:
+#        - address: "192.168.1.235:6443"
+#        #- address: "192.168.1.236:6443"
 # Whitelist all private IP addresses
   middlewares:
     default-whitelist:

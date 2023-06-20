@@ -12,9 +12,9 @@ services:
     ports:
       - "80:80" #HTTP
       - "443:443" #HTTPS
-      - "2022:2022/tcp" #SFTP
-      - "8080:8080/tcp" #Wings-Service
-      - "6443:6443" #K3s
+    #  - "2022:2022/tcp" #SFTP
+    #  - "8080:8080/tcp" #Wings-Service
+    #  - "6443:6443" #K3s
     environment:
       - CF_API_EMAIL=${CF_API_EMAIL}
       # - CF_DNS_API_TOKEN=pC5RuxMK0Vv6-GNLQlbf-JjTLeRtJBlZVezVhb2D
