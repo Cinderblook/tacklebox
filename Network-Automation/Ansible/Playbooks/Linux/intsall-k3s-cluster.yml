@@ -15,7 +15,7 @@
         state: present
 
     - name: Download and install k3s on primary master
-      shell: curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=v1.21.4+k3s1 INSTALL_K3S_EXEC="--cluster-init" sh -
+      shell: curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=v1.25.9+k3s1 INSTALL_K3S_EXEC="--cluster-init" sh -
       when: inventory_hostname == primary_master
 
     - name: Retrieve K3s token on primary master
@@ -34,5 +34,5 @@
       run_once: true
 
     - name: Join other nodes as workers
-      shell: curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=v1.21.4+k3s1 K3S_URL=https://{{ hostvars[primary_master].inventory_hostname }}:6443 K3S_TOKEN={{ k3s_token }} sh
+      shell: curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=v1.25.9+k3s1 K3S_URL=https://{{ hostvars[primary_master].inventory_hostname }}:6443 K3S_TOKEN={{ k3s_token }} sh
       when: inventory_hostname != primary_master
