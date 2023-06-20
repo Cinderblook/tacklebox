@@ -157,7 +157,7 @@ http:
     openvpn:
       loadBalancer:
         servers:
-          - url: "https://192.168.1.245:943"
+          - url: "https://192.168.1.245:443"
         passHostHeader: true
 #endregion
   middlewares:
@@ -215,34 +215,18 @@ http:
 
 tcp:
   routers:
-# Pterodactyl SFTP
-#    pterodactyl_panel-sftp:
-#      entryPoints: sftp
-#      rule: "HostSNI(`pterodactyl.cinderblock.tech`)"
-#      service: pterodactyl_panel-sftp
-#      middlewares: default-whitelist
-#      tls: {}
-# Pterodactyl_Wings SFTP 
-#    pterodactyl_wings-node01-sftp:
-#      entryPoints: sftp
-#      rule: "HostSNI(`gamenode-01.cinderblock.tech`)"
-#      service: pterodactyl_wings-node01-sftp
-#      middlewares: default-whitelist
-#      tls: {}
-# Pterodactyl_Wings port
-#    pterodactyl_wings-node01:
-#      entryPoints: wings-service
-#      rule: "HostSNI(`gamenode-01.cinderblock.tech`)"
-#      service: pterodactyl_wings-node01
-#      middlewares: default-whitelist
-#      tls: {}
-# Pterodactyl_Wings-Minecraft
-#    pterodactyl_wings-minecraft:
-#      entryPoints: wings-minecraft
-#      rule: "HostSNI(`gamenode-01.cinderblock.tech`)"
-#      service: pterodactyl_wings-minecraft
-#      middlewares: default-whitelist
-#      tls: {}
+## Pterodactyl_Wings-Minecraft
+    pterodactyl_wings-minecraft:
+      entryPoints: wings-minecraft
+      rule: "HostSNI(`*`)"
+      service: pterodactyl_wings-minecraft
+
+## OpenVPN
+    openvpn:
+      rule: "HostSNI(`*`)"
+      entryPoints: https
+      service: openvpn
+      tls: false
 # k3s port    
 #    k3s:
 #      entryPoints:
@@ -253,33 +237,24 @@ tcp:
 #      tls: 
 #        passthrough: true
 # Load balancers - Services
-#  services:
-# Pterodactyl SFTP
-#    pterodactyl_panel-sftp:
-#      loadBalancer:
-#        servers:
-#          - address: "192.168.1.240:2022"
-# Pterodactyl_Wings SFTP 
-#    pterodactyl_wings-node01-sftp:
-#      loadBalancer:
-#        servers:
-#          - address: "192.168.1.240:2022"
-# Pterodactyl_Wings port
-#    pterodactyl_wings-node01:
-#      loadBalancer:
-#        servers:
-#          - address: "192.168.1.240:8080"
-# Pterodactyl_Wings-Minecraft
-#    pterodactyl_wings-minecraft:
-#      loadBalancer:
-#        servers:
-#          - address: "192.168.1.240:28000"
+  services:
+## Pterodactyl_Wings-Minecraft
+    pterodactyl_wings-minecraft:
+      loadBalancer:
+        servers:
+          - address: "192.168.1.240:28000"
 # k3s loadbalancer
 #    k3s:
 #      loadBalancer:
 #        servers:
 #        - address: "192.168.1.235:6443"
 #        #- address: "192.168.1.236:6443"
+## OpenVPN
+    openvpn:
+      loadBalancer:
+        servers:
+          - address: "192.168.1.245:1194"
+
 # Whitelist all private IP addresses
   middlewares:
     default-whitelist:
@@ -288,4 +263,20 @@ tcp:
           - "10.0.0.0/8"
           - "192.168.0.0/16"
           - "172.16.0.0/12"
+udp:
+  routers:
+  # OpenVPN
+    openvpn:
+      entryPoints: openvpn
+      service: openvpn
+  services:
+  # OpenVPN  
+    openvpn:
+      loadBalancer:
+        servers:
+          - address: "192.168.1.245:1194"
+
+
+
+
 
