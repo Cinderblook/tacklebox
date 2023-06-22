@@ -18,14 +18,8 @@ entryPoints:
   openvpn:
     address: ":1194/udp"
 
-  #sftp:
-  #  address: ":2022/tcp"
-  #wings-service:
-  #  address: ":8080/tcp"
-  wings-minecraft:
-    address: ":28000/tcp"
-  #k3s:
-  #  address: ":6443"    
+  k3s:
+    address: ":6443"    
 serversTransport:
   insecureSkipVerify: true
 providers:

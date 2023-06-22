@@ -1,16 +1,16 @@
----
-version: '3.1'
+version: '3.9'
 
 services:
   mysql:
     image: mysql:latest
-    restart: always
-    container_name: mysql
+    restart: unless-stopped
+    container_name: k3s-mysql
     ports:
-      - 3306:3306
+      - 3396:3306
     expose:
-      - "3306"
+      - "3396"
     volumes:
       - ./mysql-data:/var/lib/mysql/
+      - ./setup.sql:/docker-entrypoint-initdb.d/setup.sql
     environment:
-      - MYSQL_ROOT_PASSWORD=enter-your-password
+      - MYSQL_ROOT_PASSWORD=${MYSQL_PASS}

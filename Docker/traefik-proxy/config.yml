@@ -1,5 +1,5 @@
 http:
- #region routers 
+ #region routers
   routers:
 # Proxmox https
     proxmox:
@@ -27,7 +27,7 @@ http:
         - default-headers
         - addprefix-admin
       tls: {}
-      service: pihole          
+      service: pihole
 # Dreamrouter http
     dreamrouter:
       entryPoints:
@@ -60,6 +60,7 @@ http:
       rule: "Host(`pterodactyl.cinderblock.tech`)"
       middlewares:
         - default-headers
+        - crowdsec-bouncer
       tls: {}
       service: pterodactyl
 # Pterodactyl_wings http
@@ -138,14 +139,14 @@ http:
       loadBalancer:
         servers:
           - url: "http://192.168.1.242:80"
-        passHostHeader: true 
-# Pterodactyl_wings Loadbalancer   
+        passHostHeader: true
+# Pterodactyl_wings Loadbalancer
     pterodactyl_wings-node01:
       loadBalancer:
         servers:
           - url: "http://192.168.1.240:443"
         passHostHeader: true
-# Rancher Loadbalancer   
+# Rancher Loadbalancer
 #    rancher:
 #      loadBalancer:
 #        servers:
@@ -226,34 +227,33 @@ tcp:
       rule: "HostSNI(`*`)"
       entryPoints: https
       service: openvpn
-      tls: false
-# k3s port    
-#    k3s:
-#      entryPoints:
-#        - k3s
-#      rule: "HostSNI(`k3s.cinderblock.tech`)"
-#      service: k3s
-#      middlewares: default-whitelist
-#      tls: 
-#        passthrough: true
+# k3s port
+    k3s:
+      entryPoints: k3s
+      rule: "HostSNI(`*`)"
+      service: k3s
+      tls: {}
+      middlewares:
+        - "default-whitelist"
 # Load balancers - Services
   services:
 ## Pterodactyl_Wings-Minecraft
-    pterodactyl_wings-minecraft:
-      loadBalancer:
-        servers:
-          - address: "192.168.1.240:28000"
-# k3s loadbalancer
-#    k3s:
+#    pterodactyl_wings-minecraft:
 #      loadBalancer:
 #        servers:
-#        - address: "192.168.1.235:6443"
-#        #- address: "192.168.1.236:6443"
+#          - address: "192.168.1.240:28000"
+# k3s loadbalancer
+    k3s:
+      loadBalancer:
+        servers:
+        - address: "192.168.1.235:6443"
+        - address: "192.168.1.236:6443"
+        - address: "192.168.1.237:6443"
 ## OpenVPN
     openvpn:
       loadBalancer:
         servers:
-          - address: "192.168.1.245:1194"
+          - address: "192.168.1.245:443"
 
 # Whitelist all private IP addresses
   middlewares:
@@ -270,13 +270,8 @@ udp:
       entryPoints: openvpn
       service: openvpn
   services:
-  # OpenVPN  
+  # OpenVPN
     openvpn:
       loadBalancer:
         servers:
           - address: "192.168.1.245:1194"
-
-
-
-
-
