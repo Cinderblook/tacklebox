@@ -1,0 +1,44 @@
+version: '3.9'
+
+services:
+  grafana:
+    image: grafana/grafana:10.0.1
+    user: "0" # Set this to prevent permission errors during Grafana deployment
+    container_name: grafana-monitor
+    dns:
+      - 192.168.1.253
+      - 1.1.1.1
+    ports:
+      - "3020:3000"
+    volumes:
+      - ./grafana-data:/var/lib/grafana
+    #environment:
+      #- "GF_SERVER_ROOT_URL=http://grafana.cinderblock.tech/"
+      #- GF_INSTALL_PLUGINS=grafana-clock-panel
+      #- GF_DEFAULT_INSTANCE_NAME=homelab-monitor
+      #- GF_SECURITY_ADMIN_USER=austin
+      #- GF_AUTH_GOOGLE_CLIENT_SECRET=${GRAF_SECRET}
+      #- GF_PLUGIN_GRAFANA_IMAGE_RENDERER_RENDERING_IGNORE_HTTPS_ERRORS=true
+      #- GF_FEATURE_TOGGLES_ENABLE=newNavigation
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.grafana-monitor.entrypoints=http"
+      - "traefik.http.routers.grafana-monitor.rule=Host(`grafana-monitor.cinderblock.tech`)"
+      - "traefik.http.middlewares.grafana-monitor-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.grafana-monitor.middlewares=grafana-monitor-https-redirect"
+      - "traefik.http.routers.grafana-monitor-secure.entrypoints=https"
+      - "traefik.http.routers.grafana-monitor-secure.rule=Host(`grafana-monitor.cinderblock.tech`)"
+      - "traefik.http.routers.grafana-monitor-secure.tls=true"
+      - "traefik.http.routers.grafana-monitor-secure.service=grafana-monitor"
+      - "traefik.http.services.grafana-monitor.loadbalancer.server.port=3000"
+      - "traefik.docker.network=proxy"    
+    networks:
+      - proxy
+      - monitoring
+
+networks:
+ proxy:
+  external: true
+ monitoring:
+  external: false
