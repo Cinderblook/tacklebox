@@ -1,0 +1,12 @@
+version: '3.9'
+services:
+    tfc-agent:
+        image: 'hashicorp/tfc-agent:latest'
+        environment:
+            - TFC_AGENT_NAME
+            - TFC_AGENT_TOKEN
+
+# Set Token variables using local env
+# Get tokens from Terraform cloud organization API
+#$ export TFC_AGENT_TOKEN=
+#$ export TFC_AGENT_NAME=<my_agent_name>
