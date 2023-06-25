@@ -5,6 +5,7 @@
   vars:
       path_src: "~/node-exporter/"
 
+
   tasks:
     - name: Create directory for Node Exporter
       file:
@@ -14,9 +15,9 @@
 
     - name: Start Node Exporter container
       docker_compose:
-        project_src: "{{ path_src }}"
+        project_name: node-exporter
         definition:
-          version: '3'
+          version: '3.9'
           services:
             node-exporter:
               image: prom/node-exporter:latest
