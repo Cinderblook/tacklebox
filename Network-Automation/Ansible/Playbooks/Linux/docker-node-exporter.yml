@@ -1,0 +1,36 @@
+# Start a Docker Container with Node-expose running for data monitoring on Grafana
+- name: Start Node Exporter on all hosts
+  hosts: '*'
+  become: yes
+  vars:
+      path_src: "~/node-exporter/"
+
+  tasks:
+    - name: Create directory for Node Exporter
+      file:
+        path: "{{ path_src }}"
+        state: directory
+        mode: '0755'  
+
+    - name: Start Node Exporter container
+      docker_compose:
+        project_src: "{{ path_src }}"
+        definition:
+          version: '3'
+          services:
+            node-exporter:
+              image: prom/node-exporter:latest
+              container_name: node-exporter
+              restart: unless-stopped
+              volumes:
+                - /proc:/host/proc:ro
+                - /sys:/host/sys:ro
+                - /:/rootfs:ro
+              command:
+                - '--path.procfs=/host/proc'
+                - '--path.rootfs=/rootfs'
+                - '--path.sysfs=/host/sys'
+                - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+              expose:
+                - 9100
+        state: present
