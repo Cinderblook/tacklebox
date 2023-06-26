@@ -52,7 +52,21 @@ services:
     expose:
       - 9100
     networks:
-      - proxy
+      - monitoring
+ 
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor
+    container_name: monitoring_cadvisor
+    restart: unless-stopped
+    privileged: true
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    ports:
+      - 9110:8080
+    networks:
       - monitoring
 
 networks:
