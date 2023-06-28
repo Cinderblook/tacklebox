@@ -12,3 +12,6 @@ layout:
   Data:
     style: row
     columns: 3
+  Services:
+    style: row
+    columns: 2

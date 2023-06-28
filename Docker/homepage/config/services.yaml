@@ -123,3 +123,20 @@
         icon: spotify.png
         href: https://spotify.cinderblock.tech
         description: Charts for Spotify
+
+    # Grafana
+    - Grafana:
+        icon: grafana.png
+        href: https://grafana-monitor.cinderblock.tech
+        description: Homelab Monitoring Service
+    
+    # InfluxDB
+    - InfluxDB:
+        icon: influxdb.png
+        href: https://influxdb.cinderblock.tech
+        description: InfluxDB - Flux!
+    # Prometheus
+    - Prometheus:
+        icon: prometheus.png
+        href: https://prometheus.cinderblock.tech
+        description: Prometheus Scraping!
