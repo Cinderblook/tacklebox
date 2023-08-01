@@ -3,10 +3,10 @@
 - hosts: all
   become: yes
   vars:
-    ad_domain: {{ DOMAIN }}
-    ad_user: {{ USER }}
-    ad_password: {{ PASS }}
-    ad_ou: {{ ORGANIZATIONAL_UNIT }}
+    ad_domain: "{{ lookup('env', 'DOMAIN') }}"
+    ad_user: "{{ lookup('env', 'USER') }}"
+    ad_password: "{{ lookup('env', 'USER') }}"
+    ad_ou: "{{ lookup('env', 'ORGANIZATIONAL_UNIT') }}"
   tasks:
     - name: Install required packages
       package:
