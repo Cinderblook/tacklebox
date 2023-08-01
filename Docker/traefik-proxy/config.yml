@@ -1,15 +1,57 @@
 http:
  #region routers
   routers:
-# Proxmox https
-    proxmox:
+# vcenter http
+    vcenter:
+      entryPoints:
+        - "http"
+      rule: "Host(`vcenter.cinderblock.tech`)"
+      middlewares:
+        - https-redirectscheme
+      service: vcenter
+# vcenter https
+    vcenter-secure:
       entryPoints:
         - "https"
-      rule: "Host(`proxmox.cinderblock.tech`)"
+      rule: "Host(`vcenter.cinderblock.tech`)"
       middlewares:
         - default-headers
       tls: {}
-      service: proxmox
+      service: vcenter
+# Esxi http
+    esxi:
+      entryPoints:
+        - "http"
+      rule: "Host(`esxi.cinderblock.tech`)"
+      middlewares:
+        - https-redirectscheme
+      service: esxi
+# esxi https
+    esxi-secure:
+      entryPoints:
+        - "https"
+      rule: "Host(`esxi.cinderblock.tech`)"
+      middlewares:
+        - default-headers
+      tls: {}
+      service: esxi
+# Truenas http
+    truenas:
+      entryPoints:
+        - "http"
+      rule: "Host(`truenas.cinderblock.tech`)"
+      middlewares:
+        - https-redirectscheme
+      service: truenas
+# treunas https
+    truenas-secure:
+      entryPoints:
+        - "https"
+      rule: "Host(`truenas.cinderblock.tech`)"
+      middlewares:
+        - default-headers
+      tls: {}
+      service: truenas      
 # Pihole http
     pihole:
       entryPoints:
@@ -116,11 +158,25 @@ http:
       service: openvpn
 #region services
   services:
-# Proxmox Loadbalancer
-    proxmox:
+# truenas Loadbalancer
+    truenas:
       loadBalancer:
         servers:
-          - url: "https://192.168.1.80:8006"
+          - url: "https://192.168.1.85:443"
+        passHostHeader: true
+# vcenter Loadbalancer
+    vcenter:
+      loadBalancer:
+        servers:
+          - url: "https://192.168.1.95:443"
+        passHostHeader: true
+# esxi Loadbalancer
+    esxi:
+      loadBalancer:
+        servers:
+          - url: "https://192.168.1.90:443"
+          - url: "https://192.168.1.90:443"
+          - url: "https://192.168.1.90:443"
         passHostHeader: true
 # Pihole Loadbalancer
     pihole:
@@ -216,17 +272,18 @@ http:
 
 tcp:
   routers:
-## Pterodactyl_Wings-Minecraft
-    pterodactyl_wings-minecraft:
-      entryPoints: wings-minecraft
-      rule: "HostSNI(`*`)"
-      service: pterodactyl_wings-minecraft
+## Pterodactyl_Wings- Minecraft
+    #pterodactyl_wings-minecraft:
+    #  entryPoints: wings-minecraft
+    #  rule: "HostSNI(`*`)"
+    #  service: pterodactyl_wings-minecraft
 
 ## OpenVPN
     openvpn:
       rule: "HostSNI(`*`)"
       entryPoints: https
       service: openvpn
+      middlewares:
 # k3s port
     k3s:
       entryPoints: k3s
@@ -238,10 +295,10 @@ tcp:
 # Load balancers - Services
   services:
 ## Pterodactyl_Wings-Minecraft
-#    pterodactyl_wings-minecraft:
-#      loadBalancer:
-#        servers:
-#          - address: "192.168.1.240:28000"
+    #pterodactyl_wings-minecraft:
+    #  loadBalancer:
+    #    servers:
+    #      - address: "192.168.1.240:27000"
 # k3s loadbalancer
     k3s:
       loadBalancer:

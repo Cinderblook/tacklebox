@@ -1,0 +1,44 @@
+---
+# Setup AD connection for Linux nodes/servers
+- hosts: all
+  become: yes
+  vars:
+    ad_domain: '<DOMAIN>'
+    ad_user: '<USERNAME>'
+    ad_password: '<PASSWORD>'
+    ad_ou: '<ORGANIZATIONAL_UNIT>'
+  tasks:
+    - name: Install required packages
+      package:
+        name:
+          - sssd
+          - realmd
+          - adcli
+          - samba-common-tools
+        state: present
+
+    - name: Join to Active Directory
+      command: >
+        realm join --user={{ ad_user }} --computer-ou={{ ad_ou }} {{ ad_domain }}
+      environment:
+        REALM_DISCOVER_USER: "{{ ad_user }}"
+        REALM_DISCOVER_PASSWORD: "{{ ad_password }}"
+      ignore_errors: yes
+
+    - name: Configure SSSD to allow AD groups
+      lineinfile:
+        dest: /etc/sssd/sssd.conf
+        regexp: 'use_fully_qualified_names'
+        line: 'use_fully_qualified_names = False'
+        state: present
+
+    - name: Configure SSSD to allow automatic home directory creation
+      lineinfile:
+        dest: /etc/pam.d/common-session
+        line: 'session required pam_mkhomedir.so skel=/etc/skel/ umask=0022'
+        state: present
+
+    - name: Restart SSSD
+      service:
+        name: sssd
+        state: restarted
