@@ -1,0 +1,28 @@
+#cloud-config
+autoinstall:
+  version: 1
+  locale: en_US
+  keyboard:
+    layout: en
+    variant: us
+  storage:
+    layout:
+      name: lvm
+  identity:
+    hostname: ubuntu
+    username: ubuntu
+    password: $6$RRahlEeL23Ch0J.Q$CrfrPOrh/aQCU7AOfxtY77qWxPhyd8Eu.lBaNNFJQjd9Jxxj3rpgvrf8f.BCdLcSmUIwUZep9x5CP03dqpckC.
+  ssh:
+    install-server: yes
+  packages:
+    - htop
+    - tmux
+    - whois
+    - dnsutils
+    - jq
+    - openssh-server
+    - cloud-init
+  user-data:
+    disable_root: false
+  late-commands:
+    - echo 'ubuntu ALL=(ALL) NOPASSWD:ALL' > /target/etc/sudoers.d/ubuntu

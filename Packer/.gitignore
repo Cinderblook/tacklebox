@@ -7,6 +7,11 @@
 # logs
 *.log
 
+#sensitive files
+user-data
+vsphere.pkrvars.hcl
+variables.auto.pkrvars.hcl
+
 # Directories
 .terraform/
 .vagrant/

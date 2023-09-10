@@ -1,0 +1,44 @@
+version: '3'
+
+services:
+  octoprint:
+    image: octoprint/octoprint:latest
+    pull_policy: always
+    restart: unless-stopped
+    ports:
+      - 80:80
+    devices:
+      # use `python -m serial.tools.miniterm` to see what the name is of the printer, this requires pyserial
+      # For the 3D printer assign the correct host USB port to /dev/ttyUSB0 in the container
+      - /dev/ttyUSB0:/dev/ttyUSB0
+      # In order to use a camera with octoprint you need to assign the correct video source to the container
+      - /dev/video0:/dev/video0
+    container_name: octoprint
+    volumes:
+      - ./octoprint-data:/octoprint  
+    environment:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+      # If you have a camera you can enable mjpeg streaming
+      - ENABLE_MJPG_STREAMER=true
+  
+  ####
+  # uncomment if you wish to edit the configuration files of octoprint
+  # refer to docs on configuration editing for more information
+  ####
+
+  config-editor:
+    image: linuxserver/code-server
+    ports:
+      - 8443:8443
+    depends_on:
+      - octoprint
+    restart: unless-stopped
+    environment:
+      - PUID=0
+      - GUID=0
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+
+    volumes:
+      - ./octoprint-data:/octoprint  
